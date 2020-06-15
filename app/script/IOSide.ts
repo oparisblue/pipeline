@@ -1,0 +1,4 @@
+enum IOSide {
+	Input,
+	Output
+}

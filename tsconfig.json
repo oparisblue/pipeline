@@ -1,0 +1,14 @@
+{	
+	"compilerOptions": {
+		"outFile": "app/src.js",
+		"removeComments": true,
+		"downlevelIteration": true,
+		"lib": ["es2015", "dom"]
+	},
+	
+	"include": [
+		"app/script/**/*"
+	],
+	
+	"compileOnSave": true
+}
