@@ -1,11 +1,17 @@
 class Pipeline {
 	
-	private main: HTMLElement;
+	public main: HTMLElement;
+	public connections: ConnectionManager;
+	
+	private mouseX: number;
+	private mouseY: number;
 	
 	private nodes: NodeElement[] = [];
 	
 	constructor() {
 		this.main = $("#main");
+		
+		this.connections = new ConnectionManager();
 		
 		// Double-Click to add nodes
 		this.main.ondblclick = (event)=>{
@@ -13,6 +19,12 @@ class Pipeline {
 			if (event.srcElement == this.main) {
 				this.addNode(new NodeAdd(event.clientX, event.clientY));
 			}
+		}
+		
+		// Track mouse position
+		window.onmousemove = (event: MouseEvent)=>{
+			this.mouseX = event.clientX;
+			this.mouseY = event.clientY;
 		}
 		
 		// Scroll to pan
@@ -31,10 +43,25 @@ class Pipeline {
 		this.nodes.push(node);
 		this.main.appendChild(node.getElement());
 		this.updateState();
+		node.updatePlugPositions();
 	}
 	
-	public deleteNode(node: NodeElement): void {
-		
+	// public deleteNode(node: NodeElement): void {
+	// 
+	// }
+	
+	/**
+	* Get the current X position of the mouse.
+	*/
+	public getMouseX(): number {
+		return this.mouseX;
+	}
+	
+	/**
+	* Get the current Y position of the mouse.
+	*/
+	public getMouseY(): number {
+		return this.mouseY;
 	}
 		
 }

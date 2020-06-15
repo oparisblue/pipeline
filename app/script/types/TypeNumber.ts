@@ -4,10 +4,12 @@
 */
 class TypeNumber extends DataType {
 	
-	/** @override **/
 	public cast(other: any): any {
 		// Special-case: cast booleans (true => 1 and false => 0)
 		if (other === true || other === false) return other + 0;
+		
+		// Special-case: empty string => default value
+		if (other === "") return this.defaultValue();
 		
 		let number = parseFloat(other);
 		
@@ -16,7 +18,6 @@ class TypeNumber extends DataType {
 		return number;
 	}
 	
-	/** @override **/
     public defaultValue(): any {
         return 0;
     }
@@ -25,24 +26,35 @@ class TypeNumber extends DataType {
         return "#03A9F4";
     }
 	
-	/** @override **/
 	public makeControl(point: ConnectionPoint, disabled: boolean): HTMLElement {
         let input = document.createElement("input");
 		input.type = "number";
 		input.value = this.getValue();
 		input.disabled = disabled;
+		
 		input.oninput = ()=>{
 			point.setValue(input.value, true);
 		}
+		
+		input.onblur = ()=>{
+			input.value = this.getValue();
+		}
+		
+		this.control = input;
+		
 		return input;
     }
 	
-	/** @override **/
+	updateControl(disabled: boolean, value: any): void {
+		let input = <HTMLInputElement> this.control;
+        input.disabled = disabled;
+		input.value = value;
+    }
+	
 	doPreviewSetup(element: HTMLElement): void {
 		element.classList.add("previewNumber");
 	}
 	
-	/** @override **/
 	doPreviewRender(element: HTMLElement): void {
 		element.innerHTML = `<div>${this.getValue().toLocaleString("en-US")}</div>`;
     }

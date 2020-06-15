@@ -33,6 +33,11 @@ abstract class NodeElement {
 	* Mark the node as complete, creating its element and running the setup functions.
 	*/
 	protected build(): void {
+		
+		// Assign sides to the connection points
+		this.inlets.forEach((x)=>{x.side = IOSide.Input});
+		this.outlets.forEach((x)=>{x.side = IOSide.Output});		
+		
 		// Main node
 		this.element = document.createElement("div");
 		this.element.classList.add("node");
@@ -68,6 +73,9 @@ abstract class NodeElement {
 				let plug = document.createElement("div");
 				plug.classList.add("plug");
 				plug.style.borderColor = point.getType().getHexColour();
+				plug.addEventListener("click", ()=>{
+					application.connections.makeConnection(point);
+				});
 				plugColumn.appendChild(plug);
 				
 				// The label for the field
@@ -101,16 +109,47 @@ abstract class NodeElement {
 	}
 	
 	/**
+	* Update the X and Y positions of the plugs in this node, so that lines between them are drawn correctly.
+	*/
+	public updatePlugPositions(): void {
+		let points: ConnectionPoint[][] = [this.inlets, this.outlets];
+		
+		let plugs = this.element.querySelectorAll(".plug");
+		
+		// Loop through the sides (input and output)
+		for (let i = 0; i < points.length; i++) {
+			// Loop through all of the connection points for each side
+			for (let j = 0; j < points[i].length; j++) {
+				// Get the current point
+				let point = points[i][j];
+				// Get the computed style for the plug representing this point in the node element
+				let rect = plugs[(i * points[0].length) + j].getBoundingClientRect();
+				// Update the X and Y coords accordingly
+				point.x = rect.left + (rect.width / 2);
+				point.y = rect.top - 1;
+			}
+		}
+	}
+	
+	/**
 	* Re-calculate the value of this node, and then update the preview and the nodes that come after this one.
 	*/
-	public update(): void {
+	public update(updateInlets: boolean = false): void {
 		this.apply().then(()=>{
 			// Update the preview image
 			this.preview.render();
 			
+			// Update the inlets if requested
+			if (updateInlets) {
+				for (let inlet of this.inlets) {
+					inlet.getType().updateControl(inlet.hasLink(), inlet.getValue());
+				}
+			}
+			
 			// Update all of the nodes that come after this one
 			for (let outlet of this.outlets) {
 				outlet.updateLinkedNode();
+				outlet.getType().updateControl(true, outlet.getValue());
 			}
 		}).catch(()=>{});
 	}

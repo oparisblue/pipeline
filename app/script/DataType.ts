@@ -15,6 +15,8 @@ abstract class DataType {
 	*/
 	private value: any;
 	
+	protected control: HTMLElement;
+	
 	constructor(initialValue: any = null) {
 		this.value = initialValue == null ? this.defaultValue() : this.cast(initialValue);
 	}
@@ -42,9 +44,15 @@ abstract class DataType {
 	abstract makeControl(point: ConnectionPoint, disabled: boolean): HTMLElement;
 	
 	/**
+	* Update the disabled state / value of the data type's control.
+	*/
+	abstract updateControl(disabled: boolean, value: any): void;
+	
+	/**
 	* Render a preview of this data type to be shown at the top of the node.
 	*/
 	abstract doPreviewRender(element: HTMLElement): void;
+	
 	
 	/**
 	* Checks if it is possible to cast from another data type to this one.
@@ -76,7 +84,9 @@ abstract class DataType {
 		this.value = this.cast(newValue);
 	}
 	
-	
+	/**
+	* Perform one-off setup tasks for the preview rendered at the top of the node.
+	*/
 	public doPreviewSetup(_element: HTMLElement): void {}
 	
 }
