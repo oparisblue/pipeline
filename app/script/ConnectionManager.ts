@@ -104,8 +104,8 @@ class ConnectionManager {
 				// The `createLinearGradient` function takes in (x0, y0, x1, y1) of the gradient, thus specifying its size and slope.
 				// We make these values track those of the line.
 				let gradient = this.context.createLinearGradient(line[0].x, line[0].y, line[1].x, line[1].y);
-				gradient.addColorStop(0, line[0].getType().getHexColour());
-				gradient.addColorStop(1, line[1].getType().getHexColour());
+				gradient.addColorStop(0, line[0].getType().getActualHexColour());
+				gradient.addColorStop(1, line[1].getType().getActualHexColour());
 				
 				// Draw the line between the two points
 				this.context.strokeStyle = gradient;
@@ -117,10 +117,10 @@ class ConnectionManager {
 			
 			// If we are currently adding a new line, draw from the saved starting point to the current mouse position
 			if (this.isDrawing) {
-				this.context.strokeStyle = this.startingPoint.getType().getHexColour();
+				this.context.strokeStyle = this.startingPoint.getType().getActualHexColour();
 				this.context.beginPath();
 				this.context.moveTo(this.startingPoint.x, this.startingPoint.y);
-				this.context.lineTo(application.getMouseX(), application.getMouseY());
+				this.context.lineTo(application.getMouseX(), application.getMouseY() - 25);
 				this.context.stroke();
 			}
 			

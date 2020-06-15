@@ -3,6 +3,8 @@ class Pipeline {
 	public main: HTMLElement;
 	public connections: ConnectionManager;
 	
+	public toAdd: any = NodeAdd;
+	
 	private mouseX: number;
 	private mouseY: number;
 	
@@ -17,7 +19,7 @@ class Pipeline {
 		this.main.ondblclick = (event)=>{
 			// Ensure we only capture double-clicks on the background, not on other nodes
 			if (event.srcElement == this.main) {
-				this.addNode(new NodeAdd(event.clientX, event.clientY));
+				this.addNode(new this.toAdd(event.clientX, event.clientY));
 			}
 		}
 		

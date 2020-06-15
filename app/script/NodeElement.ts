@@ -72,7 +72,7 @@ abstract class NodeElement {
 				let plugColumn = document.createElement("td");
 				let plug = document.createElement("div");
 				plug.classList.add("plug");
-				plug.style.borderColor = point.getType().getHexColour();
+				plug.style.borderColor = point.getType().getActualHexColour();
 				plug.addEventListener("click", ()=>{
 					application.connections.makeConnection(point);
 				});
@@ -126,7 +126,7 @@ abstract class NodeElement {
 				let rect = plugs[(i * points[0].length) + j].getBoundingClientRect();
 				// Update the X and Y coords accordingly
 				point.x = rect.left + (rect.width / 2);
-				point.y = rect.top - 1;
+				point.y = rect.top - (rect.height * 1.5);
 			}
 		}
 	}

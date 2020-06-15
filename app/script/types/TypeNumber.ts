@@ -22,8 +22,12 @@ class TypeNumber extends DataType {
         return 0;
     }
 	
-	getHexColour(): string {
+	public getHexColour(): string {
         return "#03A9F4";
+    }
+	
+	public getName(): string {
+        return "Number";
     }
 	
 	public makeControl(point: ConnectionPoint, disabled: boolean): HTMLElement {
@@ -45,17 +49,17 @@ class TypeNumber extends DataType {
 		return input;
     }
 	
-	updateControl(disabled: boolean, value: any): void {
+	public updateControl(disabled: boolean, value: any): void {
 		let input = <HTMLInputElement> this.control;
         input.disabled = disabled;
 		input.value = value;
     }
 	
-	doPreviewSetup(element: HTMLElement): void {
+	public doPreviewSetup(element: HTMLElement): void {
 		element.classList.add("previewNumber");
 	}
 	
-	doPreviewRender(element: HTMLElement): void {
+	public doPreviewRender(element: HTMLElement): void {
 		element.innerHTML = `<div>${this.getValue().toLocaleString("en-US")}</div>`;
     }
 	

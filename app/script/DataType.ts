@@ -39,20 +39,14 @@ abstract class DataType {
 	abstract getHexColour(): string;
 	
 	/**
+	* @return The name of type, as shown to the user.
+	*/
+	abstract getName(): string;
+	
+	/**
 	* Make an HTML control which can be used to display / input values of this type.
 	*/
-	abstract makeControl(point: ConnectionPoint, disabled: boolean): HTMLElement;
-	
-	/**
-	* Update the disabled state / value of the data type's control.
-	*/
-	abstract updateControl(disabled: boolean, value: any): void;
-	
-	/**
-	* Render a preview of this data type to be shown at the top of the node.
-	*/
-	abstract doPreviewRender(element: HTMLElement): void;
-	
+	abstract makeControl(point: ConnectionPoint, disabled: boolean): HTMLElement;	
 	
 	/**
 	* Checks if it is possible to cast from another data type to this one.
@@ -78,15 +72,35 @@ abstract class DataType {
 	/**
 	* Update the value of this data type.
 	* @param newValue The new value to store. If it is not of this type, then a cast will be attempted.
+	* @param type The current type of the new value.
 	* @throws {TypeError} If the attempted cast is not possible.
 	*/
-	public setValue(newValue: any): void {
+	public setValue(newValue: any, _type: DataType): void {
 		this.value = this.cast(newValue);
+	}
+	
+	/**
+	* The value returned by `getHexColour` can change depending on various factors. However, the colour used for drawing
+	* lines and plugs should always remain the same - hence, they use the value returned by this method.
+	* Typically, the two values are always the same, but this allows for them to be different.
+	*/
+	public getActualHexColour(): string {
+		return this.getHexColour();
 	}
 	
 	/**
 	* Perform one-off setup tasks for the preview rendered at the top of the node.
 	*/
 	public doPreviewSetup(_element: HTMLElement): void {}
+	
+	/**
+	* Update the disabled state / value of the data type's control.
+	*/
+	public updateControl(_disabled: boolean, _value: any): void {};
+	
+	/**
+	* Render a preview of this data type to be shown at the top of the node.
+	*/
+	public doPreviewRender(_element: HTMLElement): void {};
 	
 }
