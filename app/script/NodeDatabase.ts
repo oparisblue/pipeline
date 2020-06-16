@@ -30,7 +30,7 @@ class NodeDatabase {
 					name:        clazz.getName(),
 					description: clazz.getDescription(),
 					path:        clazz.getPath(),
-					constructor: candidate
+					construct:   candidate
 				};
 				
 				// Add it to the simple representation
@@ -128,12 +128,31 @@ class NodeDatabase {
 				
 				// Add all of the matching nodes to the panel
 				for (let node of filteredNodes) {
-					listings.appendChild(this.createNodeListing(node["name"], node["description"], false));
+					listings.appendChild(this.createNodeListing(node["name"], node["description"], false, ()=>{this.addNode(node)}));
 				}
-			}			
+			}
+		}
+		
+		// Add the first node in the search results when the Enter key is pressed.
+		search.onkeyup = (event: KeyboardEvent)=>{
+			if (event.key == "Enter" && search.value != "") {
+				let firstElement = listings.firstElementChild;
+				// If there are actually results...
+				if (!firstElement.classList.contains("noResults")) {
+					// ... click the element to add the node
+					(<HTMLElement> firstElement).click();
+				}
+			}
 		}
 		
 		search.focus();
+	}
+	
+	/**
+	* Close all open add node GUIs.
+	*/
+	public close(): void {
+		document.querySelectorAll(".addNode").forEach((x)=>x.remove());
 	}
 	
 	/**
@@ -174,19 +193,17 @@ class NodeDatabase {
 		// Add the category items
 		for (let key of itemKeys) {
 			if (key == "_nodes") continue; // Skip the special "_nodes" item
-			let row = this.createNodeListing(key, "", true);
-			
-			// Go one level deeper when clicking on a category
-			row.onclick = ()=>{
+			let row = this.createNodeListing(key, "", true, ()=>{
+				// Go one level deeper when clicking on a category
 				this.showNodeGroup([...path, key], categoryHeader, listings);
-			};
+			});
 			
 			listings.appendChild(row);
 		}
 		
 		// Add the nodes
 		for (let node of nodes) {
-			listings.appendChild(this.createNodeListing(node["name"], node["description"], false));
+			listings.appendChild(this.createNodeListing(node["name"], node["description"], false, ()=>{this.addNode(node)}));
 		}
 	}
 	
@@ -195,19 +212,24 @@ class NodeDatabase {
 	* @param {string} name The name of the row.
 	* @param {string} description The short description of the row, shown when the user hovers their mouse over it.
 	* @param {boolean} category `true` if this is a category.
+	* @param {any} clickFunction The function to call when the node is clicked.
 	* This affects behaviour (e.g. clicking a node adds the node, clicking a category scrolls to that level in the UI)
 	* and the interface generated (categories get an arrow drawn on the right-hand side of their row)
 	*/
-	private createNodeListing(name: string, description: string, isCategory: boolean): HTMLElement {
+	private createNodeListing(name: string, description: string, isCategory: boolean, clickFunction: any): HTMLElement {
 		let result: HTMLElement = document.createElement("div");
 		result.classList.add("nodeListing");
 		result.innerHTML = name + (isCategory ? `<i class="mdi mdi-chevron-right"></i>` : ``);
 		result.title = description;
+		result.onclick = clickFunction;
+		
 		return result;
 	}
 	
 	/**
 	* Sort a list of nodes so that they are in alphabetical order
+	* @param {Object[]} nodes The unsorted list
+	* @return {Object[]} The sorted list
 	*/
 	private sortNodeList(nodes: Object[]): Object[] {
 		return nodes.sort((a: Object, b: Object)=>{
@@ -215,6 +237,12 @@ class NodeDatabase {
 			let bName: string = b["name"];
 			return aName == bName ? 0 : (aName < bName ? -1 : 1);
 		});
+	}
+	
+	private addNode(node: Object): void {
+		// Position the node in the same place as the add node GUI
+		let rect = $(".addNode").getBoundingClientRect();
+		application.addNode(node["construct"], rect.left, rect.top);
 	}
 	
 }

@@ -120,7 +120,7 @@ class ConnectionManager {
 				this.context.strokeStyle = this.startingPoint.getType().getActualHexColour();
 				this.context.beginPath();
 				this.context.moveTo(this.startingPoint.x, this.startingPoint.y);
-				this.context.lineTo(application.getMouseX(), application.getMouseY() - 25);
+				this.context.lineTo(application.getMouseX(), application.getMouseY() - 8);
 				this.context.stroke();
 			}
 			

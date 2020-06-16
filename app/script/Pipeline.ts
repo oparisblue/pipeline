@@ -43,13 +43,17 @@ class Pipeline {
 			}
 		}
 		
-		// Stop drawing a line / dragging a node when the mouse is released
+		// Perform various cleanup tasks when the mouse is released
 		// (Note that releasing the mouse over a plug cancels the event, so this would not be fired in that case)
 		window.onmouseup = ()=>{
+			// End any currently drawn line
 			this.connections.endLine();
+			
+			// Stop dragging any node
 			this.draggingNode = null;
 			
-			document.querySelectorAll(".addNode").forEach((x)=>x.remove());
+			// Close the add node GUI
+			this.nodeDatabase.close();
 			this.updateState();
 		}
 		
@@ -71,15 +75,27 @@ class Pipeline {
 		$("#helperText").style.display = this.main.childElementCount == 0 ? "block" : "none";
 	}
 	
-	public addNode(node: NodeElement): void {
+	/**
+	* Add a node to the document, and closes the add node dialog
+	* @param {any} constructor A constructor for a NodeElement.
+	* @param {number} x The X position of the node's top-left corner.
+	* @param {number} y The Y position of the node's top-left corner.
+	*/
+	public addNode(constructor: any, x: number, y: number): void {
+		// Create an instance of the node
+		let node: NodeElement = new constructor();
+		
 		this.nodes.push(node);
 		
 		// Add the node's element to the page, at the current mouse position
 		let element: HTMLElement = node.getElement();
-		element.setAttribute("style", `left: ${this.getMouseX()}px; top: ${this.getMouseY()}px;`);
+		element.style.left = x + "px";
+		element.style.top  = y + "px";
 		this.main.appendChild(element);
 		
+		// Update the page, and close the add node dialog
 		this.updateState();
+		this.nodeDatabase.close();
 		node.updatePlugPositions();
 	}
 	

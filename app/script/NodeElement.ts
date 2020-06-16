@@ -201,8 +201,8 @@ abstract class NodeElement {
 				// Get the computed style for the plug representing this point in the node element
 				let rect = plugs[(i * points[0].length) + j].getBoundingClientRect();
 				// Update the X and Y coords accordingly
-				point.x = rect.left + (rect.width / 2);
-				point.y = rect.top - (rect.height * 1.5);
+				point.x = rect.left + (rect.width  / 2);
+				point.y = rect.top - 1;
 			}
 		}
 	}
