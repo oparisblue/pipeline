@@ -24,7 +24,8 @@ class Pipeline {
 		this.main.ondblclick = (event)=>{
 			// Ensure we only capture double-clicks on the background, not on other nodes
 			if (event.srcElement == this.main) {
-				this.addNode(new this.toAdd(event.clientX, event.clientY));
+				//this.addNode(new this.toAdd(event.clientX, event.clientY));
+				this.nodeDatabase.addNodeUI();
 			}
 		}
 		
