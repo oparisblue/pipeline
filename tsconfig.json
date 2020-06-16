@@ -3,6 +3,7 @@
 		"outFile": "app/src.js",
 		"removeComments": true,
 		"downlevelIteration": true,
+		"experimentalDecorators": true,
 		"lib": ["es2015", "dom"]
 	},
 	

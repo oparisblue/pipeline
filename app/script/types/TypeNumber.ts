@@ -8,8 +8,8 @@ class TypeNumber extends DataType {
 		// Special-case: cast booleans (true => 1 and false => 0)
 		if (other === true || other === false) return other + 0;
 		
-		// Special-case: empty string => default value
-		if (other === "") return this.defaultValue();
+		// Special-case: empty string / null => default value
+		if (other === "" || other == null) return this.defaultValue();
 		
 		let number = parseFloat(other);
 		

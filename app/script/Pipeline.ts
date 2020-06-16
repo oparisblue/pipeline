@@ -2,6 +2,7 @@ class Pipeline {
 	
 	public main: HTMLElement;
 	public connections: ConnectionManager;
+	public nodeDatabase: NodeDatabase;
 	
 	public toAdd: any = NodeAdd;
 	
@@ -16,6 +17,8 @@ class Pipeline {
 		this.main = $("#main");
 		
 		this.connections = new ConnectionManager();
+		
+		this.nodeDatabase = new NodeDatabase();
 		
 		// Double-Click to add nodes
 		this.main.ondblclick = (event)=>{
@@ -50,6 +53,12 @@ class Pipeline {
 			event.stopPropagation();
 		}
 		
+		// Prevent right-click
+		window.oncontextmenu = (event: MouseEvent)=>{
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		
 	}
 	
 	private updateState(): void {
@@ -59,13 +68,18 @@ class Pipeline {
 	
 	public addNode(node: NodeElement): void {
 		this.nodes.push(node);
-		this.main.appendChild(node.getElement());
+		
+		// Add the node's element to the page, at the current mouse position
+		let element: HTMLElement = node.getElement();
+		element.setAttribute("style", `left: ${this.getMouseX()}px; top: ${this.getMouseY()}px;`);
+		this.main.appendChild(element);
+		
 		this.updateState();
 		node.updatePlugPositions();
 	}
 	
 	// public deleteNode(node: NodeElement): void {
-	// 
+	// 	this.updateState();
 	// }
 	
 	/**
@@ -89,6 +103,8 @@ let application: Pipeline;
 window.onload = ()=>{
 	application = new Pipeline();
 }
+
+// Utility methods
 
 function $(selector: string): HTMLElement {
 	return document.querySelector(selector);
