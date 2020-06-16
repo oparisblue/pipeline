@@ -26,6 +26,7 @@ class Pipeline {
 			if (event.srcElement == this.main) {
 				//this.addNode(new this.toAdd(event.clientX, event.clientY));
 				this.nodeDatabase.addNodeUI();
+				this.updateState();
 			}
 		}
 		
@@ -47,6 +48,9 @@ class Pipeline {
 		window.onmouseup = ()=>{
 			this.connections.endLine();
 			this.draggingNode = null;
+			
+			document.querySelectorAll(".addNode").forEach((x)=>x.remove());
+			this.updateState();
 		}
 		
 		// Scroll to pan
@@ -64,7 +68,7 @@ class Pipeline {
 	
 	private updateState(): void {
 		// Hide and show the helper text
-		$("#helperText").style.display = this.nodes.length == 0 ? "block" : "none";
+		$("#helperText").style.display = this.main.childElementCount == 0 ? "block" : "none";
 	}
 	
 	public addNode(node: NodeElement): void {

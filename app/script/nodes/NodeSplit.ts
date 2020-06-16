@@ -9,10 +9,10 @@ class NodeSplit extends NodeElement {
 		super();
 		
 		this
-			.setProperties ({name: "Split",   description: "Splits one input into two identical output", path: "Util"})
-			.addInlet      ({name: "Input",   description: "Something to clone",                         type: new TypeAny()})
-			.addOutlet     ({name: "Clone 1", description: "A clone of Input",                           type: new TypeAny()})
-			.addOutlet     ({name: "Clone 2", description: "A clone of Input",                           type: new TypeAny()})
+			.setProperties ({name: "Split",   description: "Splits one input into two identical outputs", path: "Utility"})
+			.addInlet      ({name: "Input",   description: "Something to clone",                          type: new TypeAny()})
+			.addOutlet     ({name: "Clone 1", description: "A clone of Input",                            type: new TypeAny()})
+			.addOutlet     ({name: "Clone 2", description: "A clone of Input",                            type: new TypeAny()})
 			.setPreview    (new PreviewConnectionPoint(this.inlets[0]))
 			.build();
     }

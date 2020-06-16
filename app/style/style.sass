@@ -65,6 +65,7 @@ body, html
 /** ADD NODE UI **/
 
 .addNode
+	width: 250px
 
 	.categoryHeader
 		background-color: #212121
@@ -88,12 +89,17 @@ body, html
 			width: 90%
 			font-family: "Fira Sans", sans-serif
 			
+			&:focus
+				box-shadow: 0 0 0 2px #2196F3BB
+			
 	.nodeListings
 		background-color: #121212
+		height: 200px
+		overflow-y: scroll
 		
-		&:last-child, .nodeListing:last-child
-			border-bottom-left-radius: 5px
-			border-bottom-right-radius: 5px	
+		// &:last-child, .nodeListing:last-child
+		// 	border-bottom-left-radius: 5px
+		// 	border-bottom-right-radius: 5px	
 		
 		.nodeListing
 			padding: 5px
@@ -104,6 +110,10 @@ body, html
 				
 			.mdi-chevron-right
 				float: right
+		
+		.noResults
+			text-align: center
+			padding-top: 30px
 
 /** HELPER TEXT **/
 

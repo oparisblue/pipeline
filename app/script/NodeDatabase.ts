@@ -68,9 +68,15 @@ class NodeDatabase {
 	public addNodeUI(): void {
 		
 		let element = document.createElement("div");
-		element.style.left = application.getMouseX() + "px";
-		element.style.top  = application.getMouseY() + "px";
-		element.classList.add("addNode")
+		element.style.left = (application.getMouseX() - (250 / 2)) + "px";
+		element.style.top  = (application.getMouseY() - (262 / 2)) + "px";
+		element.classList.add("addNode");
+		
+		// Prevent clicking on the element from firing the dismiss event
+		element.onmouseup = (event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+		}
 		
 		// Search box
 		let searchContainer = document.createElement("div");
@@ -94,8 +100,40 @@ class NodeDatabase {
 		
 		application.main.appendChild(element);
 		
-		search.focus();
+		// Apply searches
+		search.oninput = ()=>{
+			if (search.value == "") {
+				// Revert to category view when the search box is empty
+				this.showNodeGroup([], categoryHeader, listings);
+			}
+			else {
+				// Get all of the matching nodes, and sort them
+				let filteredNodes = this.sortNodeList(this.db.filter((x)=>x["name"].toLowerCase().includes(search.value.toLowerCase())));
+				
+				// Clear the current contents of the panel, and show a message if there are no results
+				listings.innerHTML = filteredNodes.length == 0 ? `<div class="noResults">No results!</div>` : "";
+				
+				// Show a back button in the header that takes us back to category view and clears the search box
+				categoryHeader.innerHTML = "";
+				let backButton = document.createElement("i");
+				backButton.setAttribute("class", "mdi mdi-chevron-left");
+				backButton.onclick = ()=>{
+					this.showNodeGroup([], categoryHeader, listings);
+					search.value = "";
+				}
+				categoryHeader.appendChild(backButton);
+				let title = document.createElement("span");
+				title.innerHTML = "Search Results";
+				categoryHeader.appendChild(title);
+				
+				// Add all of the matching nodes to the panel
+				for (let node of filteredNodes) {
+					listings.appendChild(this.createNodeListing(node["name"], node["description"], false));
+				}
+			}			
+		}
 		
+		search.focus();
 	}
 	
 	/**
@@ -131,11 +169,7 @@ class NodeDatabase {
 		let itemKeys = Object.keys(items).sort();
 		
 		// Get all of the nodes in alphabetical order
-		let nodes = items["_nodes"].sort((a: Object, b: Object)=>{
-			let aName: string = a["name"];
-			let bName: string = b["name"];
-			return aName == bName ? 0 : (aName < bName ? -1 : 1);
-		});
+		let nodes = this.sortNodeList(items["_nodes"]);
 		
 		// Add the category items
 		for (let key of itemKeys) {
@@ -170,6 +204,17 @@ class NodeDatabase {
 		result.innerHTML = name + (isCategory ? `<i class="mdi mdi-chevron-right"></i>` : ``);
 		result.title = description;
 		return result;
+	}
+	
+	/**
+	* Sort a list of nodes so that they are in alphabetical order
+	*/
+	private sortNodeList(nodes: Object[]): Object[] {
+		return nodes.sort((a: Object, b: Object)=>{
+			let aName: string = a["name"];
+			let bName: string = b["name"];
+			return aName == bName ? 0 : (aName < bName ? -1 : 1);
+		});
 	}
 	
 }
