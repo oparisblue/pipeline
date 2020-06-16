@@ -6,6 +6,9 @@ abstract class NodeElement {
 	public inlets: ConnectionPoint[];
 	public outlets: ConnectionPoint[];
 	
+	public dragOffsetX: number;
+	public dragOffsetY: number;
+	
 	protected readonly name: string;
 	protected readonly description: string;
 
@@ -15,7 +18,7 @@ abstract class NodeElement {
 	
 	private x: number;
 	private y: number;
-	
+
 	constructor(name: string, description: string, x: number, y: number) {
 		this.name        = name;
 		this.description = description;
@@ -47,6 +50,13 @@ abstract class NodeElement {
 		let title = document.createElement("div");
 		title.classList.add("title");
 		title.innerHTML = this.name;
+		title.onmousedown = ()=>{
+			// Start dragging the node
+			let rect = title.getBoundingClientRect();
+			this.dragOffsetX = application.getMouseX() - rect.left;
+			this.dragOffsetY = application.getMouseY() - rect.top;
+			application.draggingNode = this;
+		}
 		this.element.appendChild(title);
 		
 		// Preview pane
@@ -73,7 +83,10 @@ abstract class NodeElement {
 				let plug = document.createElement("div");
 				plug.classList.add("plug");
 				plug.style.borderColor = point.getType().getActualHexColour();
-				plug.addEventListener("click", ()=>{
+				plug.addEventListener("mousedown", ()=>{
+					application.connections.makeConnection(point);
+				});
+				plug.addEventListener("mouseup", ()=>{
 					application.connections.makeConnection(point);
 				});
 				plugColumn.appendChild(plug);

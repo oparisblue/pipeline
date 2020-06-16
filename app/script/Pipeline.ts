@@ -5,6 +5,8 @@ class Pipeline {
 	
 	public toAdd: any = NodeAdd;
 	
+	public draggingNode: NodeElement  = null;
+	
 	private mouseX: number;
 	private mouseY: number;
 	
@@ -27,6 +29,20 @@ class Pipeline {
 		window.onmousemove = (event: MouseEvent)=>{
 			this.mouseX = event.clientX;
 			this.mouseY = event.clientY;
+			
+			// Drag the current node (if any)
+			if (this.draggingNode != null) {
+				this.draggingNode.getElement().style.left = (this.mouseX - this.draggingNode.dragOffsetX) + "px";
+				this.draggingNode.getElement().style.top  = (this.mouseY - this.draggingNode.dragOffsetY) + "px";
+				this.draggingNode.updatePlugPositions();
+			}
+		}
+		
+		// Stop drawing a line / dragging a node when the mouse is released
+		// (Note that releasing the mouse over a plug cancels the event, so this would not be fired in that case)
+		window.onmouseup = ()=>{
+			this.connections.endLine();
+			this.draggingNode = null;
 		}
 		
 		// Scroll to pan

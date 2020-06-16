@@ -15,16 +15,16 @@ class ConnectionManager {
 	constructor() {
 		this.canvas = <HTMLCanvasElement> $("#lines");
 		
+		// Find the canvas context
+		this.context = this.canvas.getContext("2d");
+		
 		// Set the initial size of the canvas
 		this.resizeCanvas();
 		
 		// Resize the canvas when the window is resized
 		window.addEventListener("resize", ()=>{
 			this.resizeCanvas();
-		})
-		
-		// Find the canvas context
-		this.context = this.canvas.getContext("2d");
+		});
 		
 		// Start the render loop
 		this.render();
@@ -37,6 +37,10 @@ class ConnectionManager {
 		let rect = this.canvas.getBoundingClientRect();
 		this.canvas.width = rect.width;
 		this.canvas.height = rect.height;
+		
+		// Style settings for the lines
+		this.context.lineCap = "round";
+		this.context.lineWidth = 3;
 	}
 	
 	/**
@@ -89,11 +93,7 @@ class ConnectionManager {
 	/**
 	* Draw the connection lines to the canvas.
 	*/
-	private render(): void {
-		// Style settings for the lines
-		this.context.lineCap = "round";
-		this.context.lineWidth = 3;
-		
+	private render(): void {		
 		let renderFunc = ()=>{
 			// Clear the previously drawn lines
 			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
