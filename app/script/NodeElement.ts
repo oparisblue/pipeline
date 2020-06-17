@@ -83,11 +83,12 @@ abstract class NodeElement {
 	
 	/**
 	* Set the preview strategy that this node should use.
-	* @param {Preview} preview The preview strategy.
+	* @param {Preview | ConnectionPoint} preview A preview strategy to use, or a connection point (in which case PreviewConnectionPoint is used automatically).
 	* @return {NodeElement} The current node, so that you can chain configuration functions.
 	*/
-	public setPreview(preview: Preview): NodeElement {
-		this.preview = preview;
+	public setPreview(preview: Preview | ConnectionPoint): NodeElement {
+		if (preview instanceof ConnectionPoint) this.preview = new PreviewConnectionPoint(<ConnectionPoint> preview);
+		else                                    this.preview  = <Preview> preview;
 		return this;
 	}
 	

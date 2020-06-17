@@ -13,7 +13,7 @@ class NodeImage extends FileNodeElement {
 		this
 			.setProperties ({name: "Image",  description: "Loads an image from a file"})
 			.addOutlet     ({name: "Image",  description: "The loaded image", type: new TypeImage()})
-			.setPreview    (new PreviewConnectionPoint(this.outlets[0]))
+			.setPreview    (this.outlets[0])
 			.build();
     }
 	

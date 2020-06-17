@@ -13,7 +13,7 @@ class NodeAdd extends NodeElement {
 			.addInlet      ({name: "X",      description: "The number on the left-hand side",  type: new TypeNumber()})
 			.addInlet      ({name: "Y",      description: "The number on the right-hand side", type: new TypeNumber()})
 			.addOutlet     ({name: "Result", description: "The result of X + Y",               type: new TypeNumber()})
-			.setPreview    (new PreviewConnectionPoint(this.outlets[0]))
+			.setPreview    (this.outlets[0])
 			.build();
     }
 	

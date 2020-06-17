@@ -1,3 +1,7 @@
+/**
+* @classdesc Basic preview strategy. Simply uses the type-defined preview in a connection point.
+* @author Orlando
+*/
 class PreviewConnectionPoint implements Preview {
 	
 	private point: ConnectionPoint;

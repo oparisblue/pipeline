@@ -13,7 +13,7 @@ class NodeSplit extends NodeElement {
 			.addInlet      ({name: "Input",   description: "Something to clone",                          type: new TypeAny()})
 			.addOutlet     ({name: "Clone 1", description: "A clone of Input",                            type: new TypeAny()})
 			.addOutlet     ({name: "Clone 2", description: "A clone of Input",                            type: new TypeAny()})
-			.setPreview    (new PreviewConnectionPoint(this.inlets[0]))
+			.setPreview    (this.inlets[0])
 			.build();
     }
 	
