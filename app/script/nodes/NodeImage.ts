@@ -4,6 +4,7 @@
 */
 @register
 @fileFormat([0x89504E47], ["image/png"], ["png"])
+@fileFormat([0xFFD8FFD8, 0xFFD8FFE0, 0xFFD8FFEE, 0xFFD8FFE1], ["image/jpeg"], ["jpg", "jpeg"])
 class NodeImage extends FileNodeElement {
 	
 	constructor() {
