@@ -14,6 +14,7 @@ abstract class NodeElement {
 	protected description: string = "No summary available.";
 	protected help: string = "No help available.";
 	protected path: string[] = ["Misc"];
+	protected appearsInAddGUI: boolean = true;
 
 	protected preview: Preview;
 	
@@ -87,6 +88,24 @@ abstract class NodeElement {
 	*/
 	public setPreview(preview: Preview): NodeElement {
 		this.preview = preview;
+		return this;
+	}
+	
+	/**
+	* Hide this element in the node add GUI.
+	* @return {NodeElement} The current node, so that you can chain configuration functions.
+	*/
+	public hideInAddGUI(): NodeElement {
+		this.appearsInAddGUI = false;
+		return this;
+	}
+	
+	/**
+	* Hide this element in the node add GUI.
+	* @return {NodeElement} The current node, so that you can chain configuration functions.
+	*/
+	public showInAddGUI(): NodeElement {
+		this.appearsInAddGUI = true;
 		return this;
 	}
 	

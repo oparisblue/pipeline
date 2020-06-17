@@ -3,6 +3,7 @@ class Pipeline {
 	public main: HTMLElement;
 	public connections: ConnectionManager;
 	public nodeDatabase: NodeDatabase;
+	public uploadManager: UploadManager;
 	
 	public toAdd: any = NodeAdd;
 	
@@ -16,9 +17,9 @@ class Pipeline {
 	constructor() {
 		this.main = $("#main");
 		
-		this.connections = new ConnectionManager();
-		
-		this.nodeDatabase = new NodeDatabase();
+		this.connections   = new ConnectionManager();
+		this.nodeDatabase  = new NodeDatabase();
+		this.uploadManager = new UploadManager();
 		
 		// Double-Click to add nodes
 		this.main.ondblclick = (event)=>{
@@ -68,9 +69,15 @@ class Pipeline {
 			event.stopPropagation();
 		}
 		
+		// Drag-and-drop to create nodes from files
+		["dragenter", "dragover", "dragleave", "drop"].forEach((type)=>{
+			window.addEventListener(type, (event: DragEvent)=>{
+				this.uploadManager.handleDrag(<"dragenter" | "dragover" | "dragleave" | "drop">type, event);
+			}, false);
+		});
 	}
 	
-	private updateState(): void {
+	public updateState(): void {
 		// Hide and show the helper text
 		$("#helperText").style.display = this.main.childElementCount == 0 ? "block" : "none";
 	}
@@ -80,11 +87,25 @@ class Pipeline {
 	* @param {any} constructor A constructor for a NodeElement.
 	* @param {number} x The X position of the node's top-left corner.
 	* @param {number} y The Y position of the node's top-left corner.
+	* @return {NodeElement} The node that was added.
 	*/
-	public addNode(constructor: any, x: number, y: number): void {
+	public addNode(constructor: any, x: number, y: number): NodeElement {
 		// Create an instance of the node
 		let node: NodeElement = new constructor();
 		
+		// Add the node
+		this.addNodeFromInstance(node, x, y);
+		
+		return node;
+	}
+	
+	/**
+	* Add a node that has already been instantiated.
+	* @param {NodeElement} node The node to add.
+	* @param {number} x The X position of the node's top-left corner.
+	* @param {number} y The Y position of the node's top-left corner.
+	*/
+	public addNodeFromInstance(node: NodeElement, x: number, y: number): void {
 		this.nodes.push(node);
 		
 		// Add the node's element to the page, at the current mouse position

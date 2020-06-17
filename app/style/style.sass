@@ -7,6 +7,8 @@ body
 	user-select: none
 	overflow: hidden
 	overscroll-behavior: none
+	padding: 0
+	margin: 0
 	
 body, html
 	height: 100%
@@ -22,6 +24,9 @@ body, html
 	pointer-events: none
 
 /** NODES **/
+
+.preventInteraction .node
+	pointer-events: none
 
 .node, .addNode
 	background-color: #323232
@@ -114,6 +119,18 @@ body, html
 		.noResults
 			text-align: center
 			padding-top: 30px
+			
+/** DRAG AND DROP **/
+
+#dragPreview
+	opacity: 0.4
+	pointer-events: none
+	filter: sepia(100%) hue-rotate(160deg)
+	border: dashed 3px #4FC3F7
+	display: none
+	
+	.preview
+		background-color: #212121
 
 /** HELPER TEXT **/
 
