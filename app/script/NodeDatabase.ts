@@ -68,8 +68,8 @@ class NodeDatabase {
 	public addNodeUI(): void {
 		
 		let element = document.createElement("div");
-		element.style.left = (application.getMouseX() - (250 / 2)) + "px";
-		element.style.top  = (application.getMouseY() - (262 / 2)) + "px";
+		element.style.left = application.getMouseX() + "px";
+		element.style.top  = application.getMouseY() + "px";
 		element.classList.add("addNode");
 		
 		// Prevent clicking on the element from firing the dismiss event
