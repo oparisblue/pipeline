@@ -14,6 +14,7 @@ class PreviewConnectionPoint implements Preview {
 	
     render(): void {
         this.point.getType().doPreviewRender(this.element);
+		this.point.getNode().updatePlugPositions();
     }
 	
 }

@@ -66,6 +66,21 @@ class ConnectionManager {
 			// Check that there is no circular link
 			if (this.checkCircularLink(outlet.getNode(), inlet.getNode())) return;
 			
+			// Ensure there won't be a type error
+			let typeError = true;
+			
+			try {
+				// Try to cast from the inlet type to the outlet type - this produces an error if it isn't possible
+				outlet.getType().cast(inlet.getType().getValue());
+				
+				// Only runs if the preceding statement doesn't error
+				typeError = false;
+			}
+			catch (e){}
+			
+			if (typeError) return;
+			
+			
 			// Stop drawing the line to the mouse cursor
 			this.isDrawing = false;
 			
@@ -149,7 +164,7 @@ class ConnectionManager {
 				this.context.strokeStyle = this.startingPoint.getType().getActualHexColour();
 				this.context.beginPath();
 				this.context.moveTo(this.startingPoint.x, this.startingPoint.y);
-				this.context.lineTo(application.getMouseX(), application.getMouseY() - 8);
+				this.context.lineTo(application.getMouseX(), application.getMouseY());
 				this.context.stroke();
 			}
 			

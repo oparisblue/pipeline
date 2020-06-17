@@ -13,11 +13,10 @@ class TypeImage extends DataType {
 		if (!(other instanceof Image)) throw new TypeError("Could not convert to an image!");
 		
 		// Also ensure that the image has loaded
-		let img: HTMLImageElement = <HTMLImageElement> other;
-		
 		// !other.complete => if the image has not yet finished loading
 		// other.naturalHeight == 0 => if the image has a height == 0 then it has not loaded correctly
 		// In these cases, we would rather have a null than a broken image
+		
 		if (!other.complete || other.naturalHeight == 0) return null;
 		
 		return other;

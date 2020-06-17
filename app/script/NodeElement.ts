@@ -211,6 +211,8 @@ abstract class NodeElement {
 		
 		let plugs = this.element.querySelectorAll(".plug");
 		
+		if (plugs.length == 0) return;
+		
 		// Loop through the sides (input and output)
 		for (let i = 0; i < points.length; i++) {
 			// Loop through all of the connection points for each side
@@ -221,7 +223,7 @@ abstract class NodeElement {
 				let rect = plugs[(i * points[0].length) + j].getBoundingClientRect();
 				// Update the X and Y coords accordingly
 				point.x = rect.left + (rect.width  / 2);
-				point.y = rect.top - 1;
+				point.y = rect.top  + (rect.height / 2);
 			}
 		}
 	}
@@ -278,6 +280,10 @@ abstract class NodeElement {
 	
 	public getPath(): string[] {
 		return this.path;
+	}
+	
+	public isNodeAddable(): boolean {
+		return this.appearsInAddGUI;
 	}
 	
 }

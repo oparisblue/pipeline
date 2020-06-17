@@ -25,6 +25,10 @@ class NodeDatabase {
 			
 			// Check that it is a NodeElement
 			if (clazz instanceof NodeElement) {
+				
+				// Ensure that it should be added to the database before proceeding
+				if (!clazz.isNodeAddable()) continue;
+				
 				// Create the database object
 				let obj = {
 					name:        clazz.getName(),
