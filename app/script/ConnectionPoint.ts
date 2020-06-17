@@ -74,6 +74,10 @@ class ConnectionPoint {
 		this.link = link;
 	}
 	
+	public getLinkedNode(): ConnectionPoint {
+		return this.link;
+	}
+	
 	/**
 	* @return `true` if this connection point is linked to another connection point; `false` otherwise.
 	*/

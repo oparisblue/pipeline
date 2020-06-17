@@ -63,6 +63,9 @@ class ConnectionManager {
 			// If they are e.g. both inlets or both outlets ignore the click
 			if (inlet.side != IOSide.Input || outlet.side != IOSide.Output) return;
 			
+			// Check that there is no circular link
+			if (this.checkCircularLink(outlet.getNode(), inlet.getNode())) return;
+			
 			// Stop drawing the line to the mouse cursor
 			this.isDrawing = false;
 			
@@ -81,6 +84,32 @@ class ConnectionManager {
 			this.isDrawing = true;
 			this.startingPoint = point;
 		}
+	}
+	
+	/**
+	* Recursively check if adding a connection would create a circular link which would crash the program.
+	* Works backwards, from outlets to inlets, until either a circular link is found, or all nodes have been checked.
+	* @param currentElement The current element to check.
+	* @param proposedTarget The element which cannot appear in any previous links.
+	* @param startingPoint If true, the current node is the starting point, so the check can be skipped.
+	*/
+	private checkCircularLink(currentElement: NodeElement, proposedTarget: NodeElement): boolean {		
+		// If the current node is the element to avoid, then this is a circular link
+		if (currentElement == proposedTarget) return true;
+		
+		// Otherwise, test all of our inlets
+		for (let inlet of currentElement.inlets) {
+			let linkedNode = inlet.getLinkedNode();
+			
+			// Only investigate if there is a wire
+			if (linkedNode == null) continue;
+			
+			// If that node is a circular link, return true
+			if (this.checkCircularLink(linkedNode.getNode(), proposedTarget)) return true;
+		}
+		
+		// Otherwise, all of the inlets are clear, there is no circular link (at least in this branch)
+		return false;
 	}
 	
 	/**
