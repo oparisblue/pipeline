@@ -144,8 +144,19 @@ body, html
 	
 /** PREVIEWS **/
 
-.previewNumber
+.previewNumber, .previewImage
 	display: flex
 	justify-content: center
 	align-items: center
 	font-size: 1.5em
+	
+.previewImage
+	height: 300px !important
+	
+	img
+		max-height: 300px
+		max-width: 300px
+	
+/** CONTROLS **/
+.disabledControl
+	opacity: 0.5

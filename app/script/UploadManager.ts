@@ -127,4 +127,8 @@ class UploadManager {
 		application.updateState();
 	}
 	
+	public static asDataURL(base64: string, contentType: string[]): string {
+		return `data:${contentType[0]};base64,${base64}`;
+	}
+	
 }
