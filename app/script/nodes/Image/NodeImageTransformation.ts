@@ -5,11 +5,11 @@
 */
 abstract class NodeImageTransformation extends NodeElement {
 	
-	constructor(name: string, description: string) {
+	constructor(name: string, description: string, subfolder: string = "") {
 		super();
 		
 		this
-			.setProperties ({name: name,     description: description,             path: "Image"})
+			.setProperties ({name: name,     description: description,             path: "Image" + subfolder})
 			.addInlet      ({name: "Image",  description: "The initial image",     type: new TypeImage()})
 			.addOutlet     ({name: "Output", description: "The transformed image", type: new TypeImage()})
 			.setPreview    (this.outlets[0])
