@@ -47,7 +47,6 @@ class Pipeline {
 			
 			// Close the add node GUI
 			this.nodeDatabase.close();
-			this.updateState();
 			
 			// End any currently drawn line, and bring up the add node GUI in its place
 			if (this.connections.isDrawingLine()) {

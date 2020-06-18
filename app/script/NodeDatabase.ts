@@ -147,6 +147,10 @@ class NodeDatabase {
 					(<HTMLElement> firstElement).click();
 				}
 			}
+			// Close the add GUI when the escape key is pressed
+			else if (event.key == "Escape") {
+				this.close();
+			}
 		}
 		
 		search.focus();
@@ -157,6 +161,7 @@ class NodeDatabase {
 	*/
 	public close(): void {
 		document.querySelectorAll(".addNode").forEach((x)=>x.remove());
+		application.updateState();
 	}
 	
 	/**

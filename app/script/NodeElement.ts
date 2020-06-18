@@ -16,6 +16,7 @@ abstract class NodeElement {
 	protected path: string[] = ["Misc"];
 	protected appearsInAddGUI: boolean = true;
 	protected topUI : HTMLElement = null;
+	protected bottomUI : HTMLElement = null;
 
 	protected preview: Preview;
 	
@@ -102,6 +103,16 @@ abstract class NodeElement {
 	*/
 	public setTopUI(ui: HTMLElement): NodeElement {
 		this.topUI = ui;
+		return this;
+	}
+	
+	/**
+	* Set the UI elements to be shown at the bottom of the node
+	* @param {HTMLElement} ui The element to add, or `null` to remove any added element.
+	* @return {NodeElement} The current node, so that you can chain configuration functions.
+	*/
+	public setBottomUI(ui: HTMLElement): NodeElement {
+		this.bottomUI = ui;
 		return this;
 	}
 	
@@ -255,6 +266,11 @@ abstract class NodeElement {
 		}
 		
 		this.element.appendChild(patchboard);
+		
+		// Bottom UI (if any)
+		if (this.bottomUI != null) {
+			this.element.appendChild(this.bottomUI);
+		}
 	}
 	
 	/**

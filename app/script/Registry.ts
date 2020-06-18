@@ -5,6 +5,9 @@ let registry: Function[];
 // Much like the registry, but for file handlers
 let fileHandlerRegistry: ([[number[], string[], string[]], Function])[];
 
+// Must like the registry, but for downloaders
+let downloaders: Downloader[];
+
 /**
 * Class Decorator.<br>
 * Any class which extends NodeElement and which has this decorator will be registered.
@@ -37,4 +40,16 @@ function fileFormat(magicNumbers: number[], contentType: string[], extension: st
 		// e.g. [[0x89504E47, "image/png", "png"], NodeImage...]
 		fileHandlerRegistry.push([[magicNumbers, contentType, extension], constructor]);
 	}
+}
+
+/**
+* Class Decorator.<br>
+* Register a strategy which can be used to download specific types of data.
+*/
+function downloadStrategy(constructor: Function) {
+	// As in @register
+	if (downloaders == undefined) downloaders = [];
+	
+	// Construct an instance of the class
+	downloaders.push(new (<any> constructor)());
 }

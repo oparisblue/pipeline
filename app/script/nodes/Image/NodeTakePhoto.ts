@@ -22,7 +22,7 @@ class NodeTakePhoto extends NodeElement {
 			.setProperties ({name: "Take Photo",  description: "Take a photo using your webcam", path: "Image"})
 			.addOutlet     ({name: "Photo",       description: "The photo",                      type: new TypeImage()})
 			.setPreview    (new PreviewFromCamera(this.outlets[0]))
-			.setTopUI(takePhotoButton)
+			.setTopUI      (takePhotoButton)
 			.build();
     }
 	
