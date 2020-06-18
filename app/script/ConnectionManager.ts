@@ -70,7 +70,8 @@ class ConnectionManager {
 			let typeError = true;
 			
 			try {
-				// Try to cast from the inlet type to the outlet type - this produces an error if it isn't possible
+				// Ensure that we can cast in both directions - if this produces an error then we can't make the connection
+				inlet.getType().cast(outlet.getType().getValue());
 				outlet.getType().cast(inlet.getType().getValue());
 				
 				// Only runs if the preceding statement doesn't error
@@ -180,6 +181,18 @@ class ConnectionManager {
 	*/
 	public isDrawingLine(): boolean {
 		return this.isDrawing;
+	}
+	
+	/**
+	* Remove any line associated with the given point from the renderer.
+	* @param {ConnectionPoint} node The node to remove lines for.
+	*/
+	public removeLine(node: ConnectionPoint): void {
+		for (let i = this.lines.length - 1; i >= 0; i--) {
+			if (this.lines[i][0] == node || this.lines[i][1] == node) {
+				this.lines.splice(i, 1);
+			}
+		}
 	}
 	
 }

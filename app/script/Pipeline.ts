@@ -133,10 +133,6 @@ class Pipeline {
 		node.updatePlugPositions();
 	}
 	
-	// public deleteNode(node: NodeElement): void {
-	// 	this.updateState();
-	// }
-	
 	/**
 	* Get the current X position of the mouse.
 	*/

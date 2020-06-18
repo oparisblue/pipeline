@@ -142,10 +142,47 @@ abstract class NodeElement {
 		this.element = document.createElement("div");
 		this.element.classList.add("node");
 		
-		// Title bar
 		let title = document.createElement("div");
 		title.classList.add("title");
-		title.innerHTML = this.name;
+		
+		// Delete button
+		let deleteButton = document.createElement("div");
+		deleteButton.innerHTML = `<i class="mdi mdi-delete"></i>`;
+		deleteButton.classList.add("nodeDelete");
+		deleteButton.title = "Delete Node";
+		deleteButton.onclick = ()=>{
+			
+			// Cleanup
+			this.onBeforeDelete();
+			
+			// Unlink any linked nodes that this took in
+			for (let inlet of this.inlets) {
+				if (inlet.hasLink()) {
+					inlet.getLinkedNode().setLinkedNode(null);
+					application.connections.removeLine(inlet);
+				}
+			}
+			
+			// Unlink any linked nodes that this emitted out, and reset those inputs
+			for (let outlet of this.outlets) {
+				if (outlet.hasLink()) {
+					let linkedNode = outlet.getLinkedNode();
+					linkedNode.setLinkedNode(null); // Remove the link
+					linkedNode.setValue(linkedNode.getType().defaultValue(), true, true); // Update the UI / value of the linked node
+					application.connections.removeLine(outlet);
+				}
+			}
+			
+			// Remove the node's element
+			this.element.remove();
+			
+			// Update the application state - e.g. to remove lines, etc
+			application.updateState();			
+		}
+		title.appendChild(deleteButton);
+		
+		// Title bar
+		title.appendChild(document.createTextNode(this.name));
 		title.onmousedown = ()=>{
 			// Start dragging the node
 			let rect = title.getBoundingClientRect();
@@ -258,7 +295,7 @@ abstract class NodeElement {
 	public update(updateInlets: boolean = false): void {
 		new Promise<void>((resolve, reject)=>{
 			this.apply(resolve, reject);
-		}).then(()=>{
+		}).then(()=>{			
 			// Update the preview image
 			this.preview.render();
 			
@@ -282,11 +319,16 @@ abstract class NodeElement {
 		this.preview.render();
 	}
 	
+	/**
+	* Gets called just before the node gets deleted, to do any required cleanup tasks
+	*/
+	protected onBeforeDelete(): void {}
+	
+	// Getters
+	
 	public getElement(): HTMLElement {
 		return this.element;
 	}
-	
-	// Getters
 	
 	public getName(): string {
 		return this.name;

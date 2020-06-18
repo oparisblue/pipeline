@@ -24,4 +24,8 @@ class TypeUnknown extends DataType {
         return document.createElement("span");
     }
 	
+	doPreviewRender(element: HTMLElement): void {
+		element.innerHTML = `<div class="previewEmpty"></div>`;
+	}
+	
 }

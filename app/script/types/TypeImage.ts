@@ -60,7 +60,7 @@ class TypeImage extends DataType {
 		// Clear the element
 		element.innerHTML = "";
 		if (img == null) {
-			element.innerHTML = `<div class="previewNoImage"></div>`;
+			element.innerHTML = `<div class="previewEmpty"></div>`;
 		}
 		else {
 			// Make a copy of the image so that properties of the original (e.g. width and height) do not get modified

@@ -30,4 +30,9 @@ class NodeTakePhoto extends NodeElement {
 		resolve();
     }
 	
+	protected onBeforeDelete(): void {
+		// Ensure that we turn off the camera before deleting the node
+		(<PreviewFromCamera> this.preview).endStream();
+	}
+	
 }

@@ -20,10 +20,17 @@ abstract class NodeImageTransformation extends NodeElement {
 		// Apply the transformation function
 		let img = (<TypeImage> this.inlets[0].getType()).performTransformation(this.transformation);
 		
-		// Once the image has been transformed, send the transformed image to the outlet
-		img.onload = ()=>{
-			this.outlets[0].setValue(img);
+		if (img == null) {
+			// If there is no image, we can't wait for it to load, so just set it to null
+			this.outlets[0].setValue(null);
 			resolve();
+		}
+		else {
+			// Once the image has been transformed, send the transformed image to the outlet
+			img.onload = ()=>{
+				this.outlets[0].setValue(img);
+				resolve();
+			}
 		}
     }
 	

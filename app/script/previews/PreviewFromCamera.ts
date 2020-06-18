@@ -58,8 +58,7 @@ class PreviewFromCamera implements Preview {
 			this.element.appendChild(canvas);
 			
 			// Stop all of the tracks, ending the camera stream
-			this.stream.getTracks().forEach((x)=>x.stop());
-			this.live = false;
+			this.endStream();
 			
 			// Update the plug positions
 			this.point.getNode().updatePlugPositions();
@@ -83,6 +82,14 @@ class PreviewFromCamera implements Preview {
 	}
 	
 	/**
+	* End the camera stream - e.g. to save resources and turn off the camera light
+	*/
+	public endStream(): void {
+		this.stream.getTracks().forEach((x)=>x.stop());
+		this.live = false;
+	}
+	
+	/**
 	* Start the live camera feed.
 	*/
 	private startLiveFeed(): void {
@@ -103,7 +110,6 @@ class PreviewFromCamera implements Preview {
 				this.video.srcObject = this.stream;
 				
 				this.video.onplaying = ()=>{
-					console.log("A");
 					// This might trigger a resize, so update the wires just in case
 					this.point.getNode().updatePlugPositions();
 				}
