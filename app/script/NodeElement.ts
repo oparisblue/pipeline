@@ -15,10 +15,13 @@ abstract class NodeElement {
 	protected help: string = "No help available.";
 	protected path: string[] = ["Misc"];
 	protected appearsInAddGUI: boolean = true;
+	protected topUI : HTMLElement = null;
 
 	protected preview: Preview;
 	
 	protected element: HTMLElement;
+	
+	private previewPane: HTMLElement;
 	
 	// Builder design pattern for creating new node types, e.g.
 	//     this.setProperties({name: "Add", description: "Add two numbers together", path: "Math/Basic"}).addInlet(...).addInlet(...).addOutlet(...).build();
@@ -93,6 +96,16 @@ abstract class NodeElement {
 	}
 	
 	/**
+	* Set the UI elements to be shown at the top of the node
+	* @param {HTMLElement} ui The element to add, or `null` to remove any added element.
+	* @return {NodeElement} The current node, so that you can chain configuration functions.
+	*/
+	public setTopUI(ui: HTMLElement): NodeElement {
+		this.topUI = ui;
+		return this;
+	}
+	
+	/**
 	* Hide this element in the node add GUI.
 	* @return {NodeElement} The current node, so that you can chain configuration functions.
 	*/
@@ -143,11 +156,14 @@ abstract class NodeElement {
 		this.element.appendChild(title);
 		
 		// Preview pane
-		let previewPane = document.createElement("div")
-		previewPane.classList.add("preview");
-		this.preview.setup(previewPane);
-		this.preview.render();
-		this.element.appendChild(previewPane);
+		this.previewPane = document.createElement("div")
+		this.previewPane.classList.add("preview");
+		this.element.appendChild(this.previewPane);
+		
+		// Top UI (if any)
+		if (this.topUI != null) {
+			this.element.appendChild(this.topUI);
+		}
 		
 		// Inlets & Outlets panes
 		let patchboard = document.createElement("table");
@@ -259,6 +275,11 @@ abstract class NodeElement {
 				outlet.getType().updateControl(true, outlet.getValue());
 			}
 		}).catch(()=>{});
+	}
+	
+	public setupPreview(): void {
+		this.preview.setup(this.previewPane);
+		this.preview.render();
 	}
 	
 	public getElement(): HTMLElement {

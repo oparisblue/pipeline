@@ -175,4 +175,11 @@ class ConnectionManager {
 		renderFunc();		
 	}
 	
+	/**
+	* @return `true` if the user is currently dragging out a connection line.
+	*/
+	public isDrawingLine(): boolean {
+		return this.isDrawing;
+	}
+	
 }

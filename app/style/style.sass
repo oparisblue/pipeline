@@ -46,7 +46,6 @@ body, html
 
 	.preview
 		background-color: #121212
-		height: 100px
 		border-bottom: solid 1px #424242
 		
 	table
@@ -156,9 +155,15 @@ body, html
 	align-items: center
 	font-size: 1.5em
 	
-.previewImage
-	height: 300px !important
-	width: 300px !important
+.previewNumber
+	height: 100px
+	
+.previewNoImage
+	height: 100px
+
+.previewImage img
+	max-height: 300px
+	max-width: 300px
 	
 	/** Checkerboard pattern! **/
 	/** https://stackoverflow.com/a/35362074 */
@@ -166,11 +171,32 @@ body, html
 	background-image: linear-gradient(45deg, #80808044 25%, transparent 25%), linear-gradient(-45deg, #80808044 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #80808044 75%), linear-gradient(-45deg, transparent 75%, #80808044 75%)
 	background-size: 20px 20px
 	background-position: 0 0, 0 10px, 10px -10px, -10px 0px
+		
+.previewVideo
+	width: 300px
+	height: auto
 	
-	img
-		max-height: 300px
-		max-width: 300px
+	video, canvas
+		display: block
 	
 /** CONTROLS **/
 .disabledControl
 	opacity: 0.5
+	
+.liveMediaButton
+	background-image: linear-gradient(180deg, #484848 0%, #282828 100%)
+	border: solid 1px #212121
+	width: 40px
+	height: 40px
+	border-radius: 100%
+	margin: 10px auto
+	cursor: pointer
+	text-align: center
+	line-height: 40px
+	font-size: 1.2em
+	
+.liveMediaButton:active
+	background-image: linear-gradient(180deg, #282828 0%, #484848 100%)
+	box-shadow: 0 2px 10px #0008 inset
+	line-height: 43px
+	color: #ddd

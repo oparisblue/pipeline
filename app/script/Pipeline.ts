@@ -22,13 +22,8 @@ class Pipeline {
 		this.uploadManager = new UploadManager();
 		
 		// Double-Click to add nodes
-		this.main.ondblclick = (event)=>{
-			// Ensure we only capture double-clicks on the background, not on other nodes
-			if (event.srcElement == this.main) {
-				//this.addNode(new this.toAdd(event.clientX, event.clientY));
-				this.nodeDatabase.addNodeUI();
-				this.updateState();
-			}
+		this.main.ondblclick = (event) => {
+			this.showAddNodeGUI(event);
 		}
 		
 		// Track mouse position
@@ -46,16 +41,22 @@ class Pipeline {
 		
 		// Perform various cleanup tasks when the mouse is released
 		// (Note that releasing the mouse over a plug cancels the event, so this would not be fired in that case)
-		window.onmouseup = ()=>{
-			// End any currently drawn line
-			this.connections.endLine();
-			
+		window.onmouseup = (event: MouseEvent)=>{
 			// Stop dragging any node
 			this.draggingNode = null;
 			
 			// Close the add node GUI
 			this.nodeDatabase.close();
 			this.updateState();
+			
+			// End any currently drawn line, and bring up the add node GUI in its place
+			if (this.connections.isDrawingLine()) {
+				// End the line
+				this.connections.endLine();
+				
+				// Show the add node GUI
+				this.showAddNodeGUI(event);
+			}
 		}
 		
 		// Scroll to pan
@@ -75,6 +76,15 @@ class Pipeline {
 				this.uploadManager.handleDrag(<"dragenter" | "dragover" | "dragleave" | "drop">type, event);
 			}, false);
 		});
+	}
+	
+	private showAddNodeGUI(event: MouseEvent): void {
+		// Ensure we only capture double-clicks on the background, not on other nodes
+		if (event.srcElement == this.main) {
+			//this.addNode(new this.toAdd(event.clientX, event.clientY));
+			this.nodeDatabase.addNodeUI();
+			this.updateState();
+		}
 	}
 	
 	public updateState(): void {
@@ -113,6 +123,9 @@ class Pipeline {
 		element.style.left = x + "px";
 		element.style.top  = y + "px";
 		this.main.appendChild(element);
+		
+		// Run the preview function for the node
+		node.setupPreview();
 		
 		// Update the page, and close the add node dialog
 		this.updateState();

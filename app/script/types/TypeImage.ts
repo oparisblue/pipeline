@@ -59,7 +59,10 @@ class TypeImage extends DataType {
 		let img: HTMLImageElement = this.getValue();
 		// Clear the element
 		element.innerHTML = "";
-		if (img != null) {
+		if (img == null) {
+			element.innerHTML = `<div class="previewNoImage"></div>`;
+		}
+		else {
 			// Make a copy of the image so that properties of the original (e.g. width and height) do not get modified
 			let displayImg = new Image();
 			displayImg.src = img.src;
