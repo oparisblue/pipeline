@@ -169,10 +169,25 @@ body, html
 	
 .previewEmpty
 	height: 100px
+	
+.previewCrop
+	position: relative
+	
+.previewCrop img
+	display: block
+	
+.previewCrop canvas
+	display: block
+	margin: 0 auto
+	position: absolute
+	left: 0
+	top: 0
+	width: 100%
+	height: 100%
 
-.previewImage img
-	max-height: 300px
-	max-width: 300px
+.previewImage img, .previewCrop img
+	max-height: 330px
+	max-width:  330px
 	
 	/** Checkerboard pattern! **/
 	/** https://stackoverflow.com/a/35362074 */
@@ -187,7 +202,7 @@ body, html
 	
 	video, canvas
 		display: block
-	
+
 /** CONTROLS **/
 .noResults
 	text-align: center

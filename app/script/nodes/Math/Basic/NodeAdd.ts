@@ -9,10 +9,10 @@ class NodeAdd extends NodeElement {
 		super();
 		
 		this
-			.setProperties ({name: "Add",    description: "Add two numbers together",          path: "Maths/Basic"})
-			.addInlet      ({name: "X",      description: "The number on the left-hand side",  type: new TypeNumber()})
-			.addInlet      ({name: "Y",      description: "The number on the right-hand side", type: new TypeNumber()})
-			.addOutlet     ({name: "Result", description: "The result of X + Y",               type: new TypeNumber()})
+			.setProperties ({name: "Add",    description: "Adds two numbers together", path: "Maths/Basic"})
+			.addInlet      ({name: "X",      description: "The first number",          type: new TypeNumber()})
+			.addInlet      ({name: "Y",      description: "The second number",         type: new TypeNumber()})
+			.addOutlet     ({name: "Result", description: "The result of X + Y",       type: new TypeNumber()})
 			.setPreview    (this.outlets[0])
 			.build();
     }

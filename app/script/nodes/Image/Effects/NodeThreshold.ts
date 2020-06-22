@@ -8,7 +8,7 @@
 class NodeThreshold extends NodeImageTransformation {
 	
 	constructor() {
-		super("Threshold", "Threshold an image - e.g. every pixel under the threshold value is black, every pixel over it is white.", "/Effects");
+		super("Threshold", "Threshold an image - e.g. every pixel under the threshold value is black, every pixel over it is white", "/Effects");
 		
 		// Set the initial threshold value to be halfway (e.g. pure gray)
 		let initialValue = new TypeNumber();

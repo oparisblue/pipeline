@@ -1,3 +1,5 @@
+///<reference path="./NodeElement.ts" />
+
 /**
 * @classdesc
 * Nodes which can be created via file upload should extend this class.
