@@ -2,7 +2,7 @@
 name: Node Suggestion
 about: For the proposal of new nodes.
 title: ''
-labels: suggestion, node-suggestion
+labels: node-suggestion
 assignees: ''
 
 ---
