@@ -1,5 +1,5 @@
 export * from "./NodeBrightness"
 export * from "./NodeGrayscale"
-export * from "./NodeHueShift"
+export * from "./NodeHueRotate"
 export * from "./NodeInvert"
 export * from "./NodeThreshold"
