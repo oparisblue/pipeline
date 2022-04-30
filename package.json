@@ -1,0 +1,11 @@
+{
+	"scripts": {
+		"start": "cp -r ./src/static/* ./build/; node-sass ./src/style/style.scss -o ./build; concurrently \"esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js --watch\" \"node-sass -w ./src/style/style.scss -o ./build\" \"http-server -c-1 -s -o ./build/\""
+	},
+	"devDependencies": {
+		"concurrently": "^7.1.0",
+		"esbuild": "^0.14.38",
+		"http-server": "^14.0.0",
+		"node-sass": "^7.0.1"
+	}
+}

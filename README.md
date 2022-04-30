@@ -1,4 +1,5 @@
 # Pipeline
+
 Unprocessed thing goes in; processed thing comes out
 
 ## What is this?
@@ -20,3 +21,8 @@ On their own, each step of these tasks is easy, and there exist countless progra
 The UNIX developers solved this problem decades ago. The UNIX command line contains hundreds of tiny programs that can be chained ("piped") together to perform tasks that would otherwise be incredibly difficult.
 
 This tool consists of hundreds of similar programs, which can be chained together visually in a tool heavily inspired by [Unity's Shader Graph](https://unity.com/shader-graph). It all runs client-side in your browser, meaning that you can use it anywhere, and that none of your personal data gets sent to external servers.
+
+## Getting Started
+
+1. Install the dev dependencies by running `yarn`.
+2. Start the app in watch mode by running `yarn start`.
