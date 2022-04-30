@@ -1,0 +1,4 @@
+steps:
+  - label: Deploy
+    command: "deploy.sh"
+    if: build.branch == 'main'
