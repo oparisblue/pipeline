@@ -30,8 +30,8 @@
 			"local/previews/*": ["previews/*"],
 			"local/types/": ["types/"],
 			"local/types/*": ["types/*"],
-			"local/utils/": ["utils/*"],
-			"local/utils/*": ["previews/*"]
+			"local/utils/": ["utils/"],
+			"local/utils/*": ["utils/*"]
 		}
 	},
 
