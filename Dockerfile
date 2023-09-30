@@ -8,7 +8,7 @@ COPY src /usr/app/src
 
 # Install node / npm to run the build tasks
 RUN apt-get update
-RUN apt-get install curl
+RUN apt-get -y install curl
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
 RUN apt-get install nodejs
 
