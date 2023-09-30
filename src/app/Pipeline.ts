@@ -82,6 +82,33 @@ export class Pipeline {
 		// Scroll to pan
 		window.onwheel = (event: WheelEvent)=>{
 			event.stopPropagation();
+			let topCheck = false;
+			let leftCheck = false;
+			let bottomCheck = false;
+			let rightCheck = false;
+
+			this.nodes.forEach((node) => {
+				const element = node.getElement();
+				const rect = element.getBoundingClientRect();
+
+				const top = parseInt(element.style.top) + event.deltaY;
+				const left = parseInt(element.style.left) + event.deltaX;
+
+				if (top + rect.height < 0) topCheck = true;
+				if (left + rect.width < 0) leftCheck = true;
+				if (rect.x > window.innerWidth) rightCheck = true;
+				if (rect.y > window.innerHeight) bottomCheck = true;
+				
+				element.style.top = top + "px";
+				element.style.left = left + "px";
+
+				node.updatePlugPositions();
+			});
+
+			$("#indicator-top").style.display = topCheck ? "block" : "none";
+			$("#indicator-right").style.display = rightCheck ? "block" : "none";
+			$("#indicator-bottom").style.display = bottomCheck ? "block" : "none";
+			$("#indicator-left").style.display = leftCheck ? "block" : "none";
 		}
 		
 		// Prevent right-click
@@ -179,5 +206,5 @@ function querySelector(selector: string): HTMLElement {
 	return document.querySelector(selector);
 }
 
-// See global.d.ts for type defintion / export
+// See global.d.ts for type definition / export
 (window as any).$ = querySelector;

@@ -1,12 +1,12 @@
 {
 	"scripts": {
-		"start": "cp -R ./src/static/* ./build/; node-sass ./src/style/style.scss -o ./build; concurrently \"esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js --watch\" \"node-sass -w ./src/style/style.scss -o ./build\" \"http-server -c-1 -s -o ./build/\"",
-		"build": "mkdir ./build/; cp -R ./src/static/* ./build/; node-sass ./src/style/style.scss -o ./build; esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js"
+		"start": "cp -R ./src/static/* ./build/; sass ./src/style/style.scss:./build/style.css; concurrently \"esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js --watch\" \"sass ./src/style/style.scss:./build/style.css\" \"http-server -c-1 -s -o ./build/\"",
+		"build": "mkdir ./build/; cp -R ./src/static/* ./build/; sass ./src/style/style.scss:./build/style.css; esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js"
 	},
 	"devDependencies": {
-		"concurrently": "^7.1.0",
-		"esbuild": "^0.14.38",
-		"http-server": "^14.0.0",
-		"node-sass": "^7.0.1"
+		"concurrently": "^8.2.1",
+		"esbuild": "^0.19.3",
+		"http-server": "^14.1.1",
+		"sass": "^1.68.0"
 	}
 }

@@ -27,6 +27,60 @@ body, html {
 	pointer-events: none;
 }
 
+/** INDICATORS **/
+
+$indicatorSize: 10px;
+$indicatorOffset: 15px;
+
+#indicator-top,
+#indicator-right,
+#indicator-bottom,
+#indicator-left {
+	position: absolute;
+	width: $indicatorSize;
+	height: $indicatorSize;
+	border-color: white;
+	transform-origin: center;
+	display: none;
+	pointer-events: none;
+}
+
+#indicator-top,
+#indicator-bottom {
+	left: 50%;
+	transform: translateX(-50%) rotate(45deg);
+}
+
+#indicator-right,
+#indicator-left {
+	top: 50%;
+	transform: translateY(-50%) rotate(45deg);
+}
+
+#indicator-top {
+	top: $indicatorOffset;
+	border-left: solid calc($indicatorSize / 4);
+	border-top: solid calc($indicatorSize / 4);
+}
+
+#indicator-right {
+	left: calc(100vw - $indicatorSize - $indicatorOffset);
+	border-top: solid calc($indicatorSize / 4);
+	border-right: solid calc($indicatorSize / 4);
+}
+
+#indicator-bottom {
+	top: calc(100vh - $indicatorSize - $indicatorOffset);
+	border-right: solid calc($indicatorSize / 4);
+	border-bottom: solid calc($indicatorSize / 4);
+}
+
+#indicator-left {
+	left: $indicatorOffset;
+	border-bottom: solid calc($indicatorSize / 4);
+	border-left: solid calc($indicatorSize / 4);
+}
+
 /** NODES **/
 
 .preventInteraction .node {
