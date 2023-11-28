@@ -1,1 +1,1 @@
-export * from "./NodeTakePhoto"
+export * from './NodeTakePhoto';

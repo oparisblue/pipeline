@@ -1,39 +1,39 @@
 {
-	"compilerOptions": {
-		"experimentalDecorators": true,
-		"removeComments": true,
-		"downlevelIteration": true,
-		"module": "CommonJS",
-		"target": "ESNext",
-		"lib": ["DOM", "ESNext"],
-		"baseUrl": "./src/app/",
-		"paths": {
-			"local/ConnectionManager": ["ConnectionManager.ts"],
-			"local/ConnectionPoint": ["ConnectionPoint.ts"],
-			"local/DataType": ["DataType.ts"],
-			"local/Downloader": ["Downloader.ts"],
-			"local/FileNodeElement": ["FileNodeElement.ts"],
-			"local/InvalidStateError": ["InvalidStateError.ts"],
-			"local/IOSide": ["IOSide.ts"],
-			"local/NodeDatabase": ["NodeDatabase.ts"],
-			"local/NodeElement": ["NodeElement.ts"],
-			"local/Pipeline": ["Pipeline.ts"],
-			"local/Preview": ["Preview.ts"],
-			"local/Registry": ["Registry.ts"],
-			"local/Upload": ["Upload.ts"],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "downlevelIteration": true,
+    "module": "CommonJS",
+    "target": "ESNext",
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": "./src/app/",
+    "paths": {
+      "local/ConnectionManager": ["ConnectionManager.ts"],
+      "local/ConnectionPoint": ["ConnectionPoint.ts"],
+      "local/DataType": ["DataType.ts"],
+      "local/Downloader": ["Downloader.ts"],
+      "local/FileNodeElement": ["FileNodeElement.ts"],
+      "local/InvalidStateError": ["InvalidStateError.ts"],
+      "local/IOSide": ["IOSide.ts"],
+      "local/NodeDatabase": ["NodeDatabase.ts"],
+      "local/NodeElement": ["NodeElement.ts"],
+      "local/Pipeline": ["Pipeline.ts"],
+      "local/Preview": ["Preview.ts"],
+      "local/Registry": ["Registry.ts"],
+      "local/Upload": ["Upload.ts"],
 
-			"local/downloaders/": ["downloaders/"],
-			"local/downloaders/*": ["downloaders/*"],
-			"local/nodes/": ["nodes/"],
-			"local/nodes/*": ["nodes/*"],
-			"local/previews/": ["previews/"],
-			"local/previews/*": ["previews/*"],
-			"local/types/": ["types/"],
-			"local/types/*": ["types/*"],
-			"local/utils/": ["utils/"],
-			"local/utils/*": ["utils/*"]
-		}
-	},
+      "local/downloaders/": ["downloaders/"],
+      "local/downloaders/*": ["downloaders/*"],
+      "local/nodes/": ["nodes/"],
+      "local/nodes/*": ["nodes/*"],
+      "local/previews/": ["previews/"],
+      "local/previews/*": ["previews/*"],
+      "local/types/": ["types/"],
+      "local/types/*": ["types/*"],
+      "local/utils/": ["utils/"],
+      "local/utils/*": ["utils/*"]
+    }
+  },
 
-	"compileOnSave": true
+  "compileOnSave": true
 }

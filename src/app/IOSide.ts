@@ -1,4 +1,4 @@
 export enum IOSide {
-	Input,
-	Output
+  Input,
+  Output,
 }

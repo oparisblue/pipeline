@@ -1,24 +1,24 @@
-import { Downloader } from "local/Downloader";
-import { downloadStrategy } from "local/Registry";
+import { Downloader } from 'local/Downloader';
+import { downloadStrategy } from 'local/Registry';
 
 /**
-* @classdesc Download strings and numbers, etc, as text files
-* @author Orlando
-*/
+ * @classdesc Download strings and numbers, etc, as text files
+ * @author Orlando
+ */
 @downloadStrategy
 export class DownloaderText extends Downloader {
-	
-    public canAccept(data: any): boolean {
-        return typeof data == "string" || typeof data == "number";
-    }
-	
-    public download(data: any): void {
-		// Download the text
-        this.downloadDataURL("data:text/plain;charset=UTF-8," + encodeURIComponent(data));
-    }
-	
-	public getExtension(): string {
-        return ".TXT";
-    }
-	
+  public canAccept(data: any): boolean {
+    return typeof data == 'string' || typeof data == 'number';
+  }
+
+  public download(data: any): void {
+    // Download the text
+    this.downloadDataURL(
+      'data:text/plain;charset=UTF-8,' + encodeURIComponent(data)
+    );
+  }
+
+  public getExtension(): string {
+    return '.TXT';
+  }
 }
