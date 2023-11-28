@@ -1,4 +1,5 @@
 import { Preview } from "local/Preview";
+import { NodeCrop } from "../nodes";
 
 /**
 * @classdesc Preview an image with a crop rectangle control overlay.
@@ -9,9 +10,11 @@ export class PreviewCrop implements Preview {
 	private node: NodeCrop;
 	private element: HTMLElement;
 	private canvas: HTMLCanvasElement = null;
+	private image: HTMLImageElement = new Image();
 	
 	constructor(node: NodeCrop) {
 		this.node = node;
+		this.image.draggable = false;
 	}
 	
     setup(element: HTMLElement): void {
@@ -27,20 +30,18 @@ export class PreviewCrop implements Preview {
 			this.canvas = null;
 		}
 		else {
+			// Set the image src
+			this.image.src = img.src;
+
 			// Make the canvas if we haven't already
 			if (this.canvas == null) {
 				// Clear the current preview
 				this.element.innerHTML = "";
 				
-				// Make a copy of the image to display behind the canvas
-				let displayImg = new Image();
-				displayImg.src = img.src;
-				displayImg.draggable = false;
-				this.element.appendChild(displayImg);
-				
 				// Create the canvas and add it to the preview
 				this.canvas = document.createElement("canvas");
 				this.element.appendChild(this.canvas);
+				this.element.appendChild(this.image);
 			}
 			
 			// Reset the canvas width and height
