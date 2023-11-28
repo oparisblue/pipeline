@@ -1,4 +1,3 @@
-import { NodeAdd } from 'local/nodes/';
 import { ConnectionManager } from './ConnectionManager';
 import { NodeDatabase } from './NodeDatabase';
 import { NodeElement } from './NodeElement';
@@ -25,7 +24,7 @@ export class Pipeline {
   public nodeDatabase: NodeDatabase;
   public uploadManager: UploadManager;
 
-  public toAdd: any = NodeAdd;
+  public toAdd: any = Nodes.NodeAdd;
 
   public draggingNode: NodeElement = null;
 

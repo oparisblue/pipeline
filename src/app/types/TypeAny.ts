@@ -1,6 +1,6 @@
-import { ConnectionPoint } from 'local/ConnectionPoint';
-import { DataType } from 'local/DataType';
+import { DataType } from 'DataType';
 import { TypeUnknown } from './TypeUnknown';
+import { ConnectionPoint } from 'ConnectionPoint';
 
 /**
  * @classdesc Represents _any_ type. For meta operations, like Split, etc.

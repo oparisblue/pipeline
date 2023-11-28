@@ -1,6 +1,6 @@
-import { NodeElement } from 'local/NodeElement';
-import { register } from 'local/Registry';
-import { TypeImage } from 'local/types/TypeImage';
+import { NodeElement } from 'NodeElement';
+import { register } from 'Registry';
+import { TypeImage } from 'types';
 
 /**
  * @classdesc Split an image into its red, green and blue channels.

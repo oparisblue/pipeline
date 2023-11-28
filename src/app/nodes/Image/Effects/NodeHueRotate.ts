@@ -1,8 +1,7 @@
-import { register } from 'local/Registry';
-import { NodeImageTransformation } from 'local/nodes/Image/NodeImageTransformation';
-import { TypeNumber } from 'local/types/TypeNumber';
-import { ImageTransformationFunction } from 'local/types/TypeImage';
-import { clamp, radians } from 'local/utils/';
+import { register } from 'Registry';
+import { NodeImageTransformation } from '../NodeImageTransformation';
+import { ImageTransformationFunction, TypeNumber } from 'types';
+import { clamp, radians } from 'utils';
 
 /**
  * @classdesc Hue rotate the colours of an image by a given amount of degrees

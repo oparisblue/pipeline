@@ -1,5 +1,5 @@
-import { NodeElement } from 'local/NodeElement';
-import { ImageTransformationFunction, TypeImage } from 'local/types/TypeImage';
+import { NodeElement } from 'NodeElement';
+import { ImageTransformationFunction, TypeImage } from 'types';
 
 /**
  * @classdesc A base class containing all the boilerplate code for nodes that do some combination of

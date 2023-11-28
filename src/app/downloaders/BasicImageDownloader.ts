@@ -1,5 +1,5 @@
-import { Downloader } from 'local/Downloader';
-import { downloadStrategy } from 'local/Registry';
+import { Downloader } from 'Downloader';
+import { downloadStrategy } from 'Registry';
 
 /**
  * @classdesc An abstract downloader that's capable of downloading basic kinds of images - e.g. those supported in canvas out-of-the-box

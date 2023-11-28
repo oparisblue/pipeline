@@ -1,7 +1,6 @@
-import { NodeElement } from 'local/NodeElement';
-import { register } from 'local/Registry';
-import { TypeImage } from 'local/types/TypeImage';
-import { TypeNumber } from 'local/types/TypeNumber';
+import { NodeElement } from 'NodeElement';
+import { register } from 'Registry';
+import { TypeImage, TypeNumber } from 'types';
 
 /**
  * @classdesc Get information about an image (e.g. width and height).

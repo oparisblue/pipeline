@@ -1,5 +1,5 @@
-import { ConnectionPoint } from 'local/ConnectionPoint';
-import { DataType } from 'local/DataType';
+import { ConnectionPoint } from 'ConnectionPoint';
+import { DataType } from 'DataType';
 
 /**
  * @classdesc To be used in places where another type cannot be worked out. You probably want {@link TypeAny} instead.

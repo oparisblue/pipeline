@@ -1,7 +1,7 @@
-import { DataType } from 'local/DataType';
-import { NodeElement } from 'local/NodeElement';
-import { register } from 'local/Registry';
-import { TypeAny } from 'local/types/TypeAny';
+import { DataType } from 'DataType';
+import { NodeElement } from 'NodeElement';
+import { register } from 'Registry';
+import { TypeAny } from 'types';
 
 /**
  * @classdesc Takes in something of any type, produces two exact copies of it

@@ -1,5 +1,5 @@
-import { ConnectionPoint } from 'local/ConnectionPoint';
-import { Preview } from 'local/Preview';
+import { ConnectionPoint } from 'ConnectionPoint';
+import { Preview } from 'Preview';
 
 /**
  * @classdesc Preview camera input.

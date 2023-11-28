@@ -1,4 +1,4 @@
-import { TypeUnknown } from 'local/types/';
+import { TypeUnknown } from 'types';
 import { DataType } from './DataType';
 import { IOSide } from './IOSide';
 import { NodeElement } from './NodeElement';

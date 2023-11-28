@@ -1,6 +1,6 @@
-import { register } from 'local/Registry';
-import { NodeImageTransformation } from 'local/nodes/Image/NodeImageTransformation';
-import { ImageTransformationFunction } from 'local/types/TypeImage';
+import { register } from 'Registry';
+import { NodeImageTransformation } from '../NodeImageTransformation';
+import { ImageTransformationFunction } from 'types';
 
 /**
  * @classdesc Invert the colours of the image

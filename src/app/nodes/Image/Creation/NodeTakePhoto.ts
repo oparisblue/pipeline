@@ -1,10 +1,7 @@
-import { NodeElement } from 'local/NodeElement';
-import {
-  CameraFeedState,
-  PreviewFromCamera,
-} from 'local/previews/PreviewFromCamera';
-import { register } from 'local/Registry';
-import { TypeImage } from 'local/types/TypeImage';
+import { NodeElement } from 'NodeElement';
+import { CameraFeedState, PreviewFromCamera } from 'previews';
+import { register } from 'Registry';
+import { TypeImage } from 'types';
 
 /**
  * @classdesc Take a photo using your webcam.

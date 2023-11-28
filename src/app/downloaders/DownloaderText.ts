@@ -1,5 +1,5 @@
-import { Downloader } from 'local/Downloader';
-import { downloadStrategy } from 'local/Registry';
+import { Downloader } from 'Downloader';
+import { downloadStrategy } from 'Registry';
 
 /**
  * @classdesc Download strings and numbers, etc, as text files

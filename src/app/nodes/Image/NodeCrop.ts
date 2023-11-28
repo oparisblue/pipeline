@@ -1,8 +1,7 @@
-import { PreviewCrop } from 'local/previews/PreviewCrop';
-import { register } from 'local/Registry';
-import { ImageTransformationFunction } from 'local/types/TypeImage';
-import { TypeNumber } from 'local/types/TypeNumber';
+import { register } from 'Registry';
 import { NodeImageTransformation } from './NodeImageTransformation';
+import { ImageTransformationFunction, TypeNumber } from 'types';
+import { PreviewCrop } from 'previews';
 
 /**
  * @classdesc Crop an image.

@@ -1,6 +1,6 @@
-import { NodeElement } from 'local/NodeElement';
-import { downloaders, register } from 'local/Registry';
-import { TypeAny } from 'local/types/TypeAny';
+import { NodeElement } from 'NodeElement';
+import { downloaders, register } from 'Registry';
+import { TypeAny } from 'types';
 
 /**
  * @classdesc Download the result from a previous node.
@@ -44,7 +44,7 @@ export class NodeDownload extends NodeElement {
 
     let currentValue = this.inlets[0].getValue();
 
-    // Check each avaialble download strategy to see if it can download our new data
+    // Check each available download strategy to see if it can download our new data
     for (let downloader of downloaders) {
       if (downloader.canAccept(currentValue)) {
         // Create a button that the user can click to download the data as a file

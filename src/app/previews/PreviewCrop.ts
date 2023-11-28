@@ -1,4 +1,4 @@
-import { Preview } from 'local/Preview';
+import { Preview } from 'Preview';
 import { NodeCrop } from '../nodes';
 
 /**

@@ -1,6 +1,6 @@
-import { NodeElement } from 'local/NodeElement';
-import { register } from 'local/Registry';
-import { TypeNumber } from 'local/types/TypeNumber';
+import { NodeElement } from 'NodeElement';
+import { register } from 'Registry';
+import { TypeNumber } from 'types';
 
 /**
  * @classdesc Takes in two numbers, and adds them together.

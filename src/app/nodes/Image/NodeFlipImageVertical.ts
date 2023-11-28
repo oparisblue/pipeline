@@ -1,6 +1,6 @@
-import { register } from 'local/Registry';
-import { ImageTransformationFunction } from 'local/types/TypeImage';
+import { register } from 'Registry';
 import { NodeImageTransformation } from './NodeImageTransformation';
+import { ImageTransformationFunction } from 'types';
 
 /**
  * @classdesc Flips an image vertically (across the Y axis)

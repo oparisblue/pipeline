@@ -1,7 +1,6 @@
-import { register } from 'local/Registry';
-import { ImageTransformationFunction } from 'local/types/TypeImage';
-import { TypeNumber } from 'local/types/TypeNumber';
-import { NodeImageTransformation } from 'local/nodes/Image/NodeImageTransformation';
+import { register } from 'Registry';
+import { NodeImageTransformation } from '../NodeImageTransformation';
+import { ImageTransformationFunction, TypeNumber } from 'types';
 
 /**
  * @classdesc Brighten or darken an image

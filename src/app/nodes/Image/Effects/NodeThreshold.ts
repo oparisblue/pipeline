@@ -1,7 +1,6 @@
-import { register } from 'local/Registry';
-import { NodeImageTransformation } from 'local/nodes/Image/NodeImageTransformation';
-import { ImageTransformationFunction } from 'local/types/TypeImage';
-import { TypeNumber } from 'local/types/TypeNumber';
+import { register } from 'Registry';
+import { NodeImageTransformation } from '../NodeImageTransformation';
+import { ImageTransformationFunction, TypeNumber } from 'types';
 
 /**
  * @classdesc Threshold an image - e.g. every pixel under the threshold value is black, every pixel over it is white.

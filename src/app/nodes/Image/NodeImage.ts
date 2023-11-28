@@ -1,7 +1,7 @@
-import { FileNodeElement } from 'local/FileNodeElement';
-import { fileFormat, register } from 'local/Registry';
-import { TypeImage } from 'local/types/TypeImage';
+import { FileNodeElement } from 'FileNodeElement';
+import { fileFormat, register } from 'Registry';
 import { UploadManager } from 'UploadManager';
+import { TypeImage } from 'types';
 
 /**
  * @classdesc Loads an image from a file.

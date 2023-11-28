@@ -1,5 +1,5 @@
-import { ConnectionPoint } from 'local/ConnectionPoint';
-import { DataType } from 'local/DataType';
+import { ConnectionPoint } from 'ConnectionPoint';
+import { DataType } from 'DataType';
 
 /**
  * @classdesc Represents static images, e.g. png, and jpg. For gif, see // TODO
