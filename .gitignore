@@ -3,3 +3,4 @@ app/src.js
 .DS_Store
 .build
 node_modules/
+build/
