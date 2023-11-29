@@ -1,7 +1,7 @@
-import { DataType } from 'DataType';
-import { NodeElement } from 'NodeElement';
-import { register } from 'Registry';
-import { TypeAny } from 'types';
+import { DataType } from "DataType";
+import { NodeElement } from "NodeElement";
+import { register } from "Registry";
+import { TypeAny } from "types";
 
 /**
  * @classdesc Takes in something of any type, produces two exact copies of it
@@ -13,24 +13,24 @@ export class NodeSplit extends NodeElement {
     super();
 
     this.setProperties({
-      name: 'Split',
-      description: 'Splits one input into two identical outputs',
-      path: 'Utility',
+      name: "Split",
+      description: "Splits one input into two identical outputs",
+      path: "Utility"
     })
       .addInlet({
-        name: 'Input',
-        description: 'Something to clone',
-        type: new TypeAny(),
+        name: "Input",
+        description: "Something to clone",
+        type: new TypeAny()
       })
       .addOutlet({
-        name: 'Clone 1',
-        description: 'A clone of Input',
-        type: new TypeAny(),
+        name: "Clone 1",
+        description: "A clone of Input",
+        type: new TypeAny()
       })
       .addOutlet({
-        name: 'Clone 2',
-        description: 'A clone of Input',
-        type: new TypeAny(),
+        name: "Clone 2",
+        description: "A clone of Input",
+        type: new TypeAny()
       })
       .setPreview(this.inlets[0])
       .build();

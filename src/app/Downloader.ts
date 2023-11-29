@@ -19,13 +19,13 @@ export abstract class Downloader {
   public abstract getExtension(): string;
 
   protected downloadDataURL(dataURL: string) {
-    let link = document.createElement('a');
+    let link = document.createElement("a");
     // Set the file name and attempt to force a download
-    link.download = 'download' + this.getExtension();
+    link.download = "download" + this.getExtension();
     // Set the path of the link to be the data URL representing the file
     link.href = dataURL;
     // Ensure we don't replace the current tab
-    link.target = '_blank';
+    link.target = "_blank";
     // Simulate a mouse click on the link, opening it and thus downloading the file
     link.click();
   }

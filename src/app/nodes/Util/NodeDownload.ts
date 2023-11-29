@@ -1,6 +1,6 @@
-import { NodeElement } from 'NodeElement';
-import { downloaders, register } from 'Registry';
-import { TypeAny } from 'types';
+import { NodeElement } from "NodeElement";
+import { downloaders, register } from "Registry";
+import { TypeAny } from "types";
 
 /**
  * @classdesc Download the result from a previous node.
@@ -13,17 +13,17 @@ export class NodeDownload extends NodeElement {
   constructor() {
     super();
 
-    this.downloadUI = document.createElement('div');
+    this.downloadUI = document.createElement("div");
 
     this.setProperties({
-      name: 'Download',
-      description: 'Download the result from a previous node',
-      path: 'Utility',
+      name: "Download",
+      description: "Download the result from a previous node",
+      path: "Utility"
     })
       .addInlet({
-        name: 'Input',
-        description: 'Something to download',
-        type: new TypeAny(),
+        name: "Input",
+        description: "Something to download",
+        type: new TypeAny()
       })
       .setPreview(this.inlets[0])
       .setBottomUI(this.downloadUI)
@@ -40,7 +40,7 @@ export class NodeDownload extends NodeElement {
 
   private updateDownloadUI(): void {
     // Clear the current list of download strategies
-    this.downloadUI.innerHTML = '';
+    this.downloadUI.innerHTML = "";
 
     let currentValue = this.inlets[0].getValue();
 
@@ -48,8 +48,8 @@ export class NodeDownload extends NodeElement {
     for (let downloader of downloaders) {
       if (downloader.canAccept(currentValue)) {
         // Create a button that the user can click to download the data as a file
-        let downloadButton = document.createElement('button');
-        downloadButton.classList.add('downloadButton');
+        let downloadButton = document.createElement("button");
+        downloadButton.classList.add("downloadButton");
         downloadButton.innerHTML = `<i class="mdi mdi-download"></i> ${downloader.getExtension()}`;
         downloadButton.onclick = () => {
           downloader.download(currentValue);
@@ -60,7 +60,7 @@ export class NodeDownload extends NodeElement {
     }
 
     // If no strategies were found (e.g. the UI is still empty), show the "No results" message
-    if (this.downloadUI.innerHTML == '') {
+    if (this.downloadUI.innerHTML == "") {
       this.downloadUI.innerHTML = `<div class="noResults">No Download Methods</div>`;
     }
   }

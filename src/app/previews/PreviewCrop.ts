@@ -1,5 +1,5 @@
-import { Preview } from 'Preview';
-import { NodeCrop } from '../nodes';
+import { Preview } from "Preview";
+import { NodeCrop } from "../nodes";
 
 /**
  * @classdesc Preview an image with a crop rectangle control overlay.
@@ -18,7 +18,7 @@ export class PreviewCrop implements Preview {
 
   setup(element: HTMLElement): void {
     this.element = element;
-    this.element.classList.add('previewCrop');
+    this.element.classList.add("previewCrop");
   }
 
   render(): void {
@@ -34,10 +34,10 @@ export class PreviewCrop implements Preview {
       // Make the canvas if we haven't already
       if (this.canvas == null) {
         // Clear the current preview
-        this.element.innerHTML = '';
+        this.element.innerHTML = "";
 
         // Create the canvas and add it to the preview
-        this.canvas = document.createElement('canvas');
+        this.canvas = document.createElement("canvas");
         this.element.appendChild(this.canvas);
         this.element.appendChild(this.image);
       }
@@ -53,7 +53,7 @@ export class PreviewCrop implements Preview {
       let y1 = this.node.inlets[4].getValue();
 
       // Render the image to a canvas
-      let ctx = this.canvas.getContext('2d');
+      let ctx = this.canvas.getContext("2d");
 
       // Grey-out the area not in the crop window
 
@@ -63,8 +63,8 @@ export class PreviewCrop implements Preview {
       // Inner rectangle
       ctx.moveTo(x0, y0);
       ctx.rect(x0, y0, x1 - x0, y1 - y0);
-      ctx.fillStyle = '#000B';
-      ctx.fill('evenodd'); // https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule
+      ctx.fillStyle = "#000B";
+      ctx.fill("evenodd"); // https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule
     }
 
     // Update the line positions in case the size of the node changed

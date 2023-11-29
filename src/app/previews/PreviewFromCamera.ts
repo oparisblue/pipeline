@@ -1,5 +1,5 @@
-import { ConnectionPoint } from 'ConnectionPoint';
-import { Preview } from 'Preview';
+import { ConnectionPoint } from "ConnectionPoint";
+import { Preview } from "Preview";
 
 /**
  * @classdesc Preview camera input.
@@ -24,7 +24,7 @@ export class PreviewFromCamera implements Preview {
 
   setup(element: HTMLElement): void {
     this.element = element;
-    this.element.classList.add('previewVideo');
+    this.element.classList.add("previewVideo");
     this.startLiveFeed();
   }
 
@@ -40,24 +40,24 @@ export class PreviewFromCamera implements Preview {
       let rect = this.video.getBoundingClientRect();
 
       // Take a still frame of the video
-      let canvas = document.createElement('canvas');
+      let canvas = document.createElement("canvas");
       canvas.width = this.video.videoWidth;
       canvas.height = this.video.videoHeight;
 
-      let ctx = canvas.getContext('2d');
+      let ctx = canvas.getContext("2d");
       ctx.drawImage(this.video, 0, 0);
 
       // Convert the canvas to an image
       let img = new Image();
-      img.src = canvas.toDataURL('image/png');
+      img.src = canvas.toDataURL("image/png");
       img.onload = () => {
         this.point.setValue(img, true);
       };
 
       // Show the image preview
-      this.element.innerHTML = '';
+      this.element.innerHTML = "";
       canvas.setAttribute(
-        'style',
+        "style",
         `width:${rect.width}px; height:${rect.height}px;`
       );
       this.element.appendChild(canvas);
@@ -74,8 +74,8 @@ export class PreviewFromCamera implements Preview {
 
       // Maintain the aspect ratio so the node doesn't "jump"
       let rect = this.element.getBoundingClientRect();
-      this.element.style.width = rect.width + 'px';
-      this.element.style.height = rect.height - 1 + 'px';
+      this.element.style.width = rect.width + "px";
+      this.element.style.height = rect.height - 1 + "px";
 
       // Restart the feed
       this.live = true;
@@ -99,12 +99,12 @@ export class PreviewFromCamera implements Preview {
   private startLiveFeed(): void {
     if (this.live) {
       // Make up the video element where the live feed will be shown
-      this.video = document.createElement('video');
+      this.video = document.createElement("video");
       this.video.autoplay = true;
       this.video.width = 300;
 
       // Set the preview to only contain that video element
-      this.element.innerHTML = '';
+      this.element.innerHTML = "";
       this.element.appendChild(this.video);
       this.point.getNode().updatePlugPositions();
 
@@ -127,5 +127,5 @@ export class PreviewFromCamera implements Preview {
  */
 export enum CameraFeedState {
   LIVE,
-  STILL,
+  STILL
 }

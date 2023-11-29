@@ -1,4 +1,4 @@
-import { Downloader } from './Downloader';
+import { Downloader } from "./Downloader";
 
 // Stores all of the registered constructors.
 
@@ -49,7 +49,7 @@ export function fileFormat(
     // e.g. [[0x89504E47, "image/png", "png"], NodeImage...]
     fileHandlerRegistry.push([
       [magicNumbers, contentType, extension],
-      constructor,
+      constructor
     ]);
   };
 }

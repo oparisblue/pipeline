@@ -1,5 +1,5 @@
-import { ConnectionPoint } from 'ConnectionPoint';
-import { Preview } from 'Preview';
+import { ConnectionPoint } from "ConnectionPoint";
+import { Preview } from "Preview";
 
 /**
  * @classdesc Basic preview strategy. Simply uses the type-defined preview in a connection point.

@@ -1,4 +1,4 @@
-import { ConnectionPoint } from './ConnectionPoint';
+import { ConnectionPoint } from "./ConnectionPoint";
 
 /**
  * Creates a new instance of the data type. If a value is not provided, then the type's default value is used

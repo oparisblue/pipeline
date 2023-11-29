@@ -2,7 +2,7 @@
 
 body {
   background-color: #212121;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: "Fira Sans", sans-serif;
   color: #fff;
   user-select: none;
   overflow: hidden;
@@ -177,7 +177,7 @@ $indicatorOffset: 15px;
   }
 
   .search {
-    input[type='text'] {
+    input[type="text"] {
       border-radius: 100px;
       border-style: none;
       outline: none;
@@ -185,7 +185,7 @@ $indicatorOffset: 15px;
       margin: 5px auto;
       display: block;
       width: 90%;
-      font-family: 'Fira Sans', sans-serif;
+      font-family: "Fira Sans", sans-serif;
 
       &:focus {
         box-shadow: 0 0 0 2px #2196f3bb;
@@ -347,7 +347,7 @@ $indicatorOffset: 15px;
   background-image: linear-gradient(180deg, #484848 0%, #282828 100%);
   border: solid 1px #212121;
   color: #fff;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: "Fira Sans", sans-serif;
   height: 30px;
   border-radius: 50px;
   margin: 5px auto;

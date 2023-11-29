@@ -1,7 +1,7 @@
-import { ConnectionPoint } from './ConnectionPoint';
-import { IOSide } from './IOSide';
-import { NodeElement } from './NodeElement';
-import { application } from './Pipeline';
+import { ConnectionPoint } from "./ConnectionPoint";
+import { IOSide } from "./IOSide";
+import { NodeElement } from "./NodeElement";
+import { application } from "./Pipeline";
 
 /**
  * @classdesc Draws the lines between nodes, keeps track of parameters when new lines are being created, and provides controls for deleting lines.
@@ -17,16 +17,16 @@ export class ConnectionManager {
   private lines: ConnectionPoint[][] = [];
 
   constructor() {
-    this.canvas = <HTMLCanvasElement>$('#lines');
+    this.canvas = <HTMLCanvasElement>$("#lines");
 
     // Find the canvas context
-    this.context = this.canvas.getContext('2d');
+    this.context = this.canvas.getContext("2d");
 
     // Set the initial size of the canvas
     this.resizeCanvas();
 
     // Resize the canvas when the window is resized
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       this.resizeCanvas();
     });
 
@@ -43,7 +43,7 @@ export class ConnectionManager {
     this.canvas.height = rect.height;
 
     // Style settings for the lines
-    this.context.lineCap = 'round';
+    this.context.lineCap = "round";
     this.context.lineWidth = 3;
   }
 

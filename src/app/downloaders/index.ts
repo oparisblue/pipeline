@@ -1,2 +1,2 @@
-export * from './BasicImageDownloader';
-export * from './DownloaderText';
+export * from "./BasicImageDownloader";
+export * from "./DownloaderText";

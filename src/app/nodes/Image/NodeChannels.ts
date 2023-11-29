@@ -1,6 +1,6 @@
-import { NodeElement } from 'NodeElement';
-import { register } from 'Registry';
-import { TypeImage } from 'types';
+import { NodeElement } from "NodeElement";
+import { register } from "Registry";
+import { TypeImage } from "types";
 
 /**
  * @classdesc Split an image into its red, green and blue channels.
@@ -12,29 +12,29 @@ export class NodeChannels extends NodeElement {
     super();
 
     this.setProperties({
-      name: 'Channels',
-      description: 'Split an image into its red, green and blue channels',
-      path: 'Image',
+      name: "Channels",
+      description: "Split an image into its red, green and blue channels",
+      path: "Image"
     })
       .addInlet({
-        name: 'Image',
-        description: 'The initial image',
-        type: new TypeImage(),
+        name: "Image",
+        description: "The initial image",
+        type: new TypeImage()
       })
       .addOutlet({
-        name: 'Red',
-        description: 'The red channel',
-        type: new TypeImage(),
+        name: "Red",
+        description: "The red channel",
+        type: new TypeImage()
       })
       .addOutlet({
-        name: 'Green',
-        description: 'The green channel',
-        type: new TypeImage(),
+        name: "Green",
+        description: "The green channel",
+        type: new TypeImage()
       })
       .addOutlet({
-        name: 'Blue',
-        description: 'The blue channel',
-        type: new TypeImage(),
+        name: "Blue",
+        description: "The blue channel",
+        type: new TypeImage()
       })
       .setPreview(this.inlets[0])
       .build();

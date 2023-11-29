@@ -1,5 +1,5 @@
-import { ConnectionPoint } from 'ConnectionPoint';
-import { DataType } from 'DataType';
+import { ConnectionPoint } from "ConnectionPoint";
+import { DataType } from "DataType";
 
 /**
  * @classdesc Represents static images, e.g. png, and jpg. For gif, see // TODO
@@ -12,7 +12,7 @@ export class TypeImage extends DataType {
 
     // Otherwise, it has to be an HTML image
     if (!(other instanceof Image))
-      throw new TypeError('Could not convert to an image!');
+      throw new TypeError("Could not convert to an image!");
 
     // Also ensure that the image has loaded
     // !other.complete => if the image has not yet finished loading
@@ -29,40 +29,40 @@ export class TypeImage extends DataType {
   }
 
   public getHexColour(): string {
-    return '#E91E63';
+    return "#E91E63";
   }
 
   public getName(): string {
-    return 'Image';
+    return "Image";
   }
 
   public makeControl(_point: ConnectionPoint, disabled: boolean): HTMLElement {
-    this.control = document.createElement('span');
+    this.control = document.createElement("span");
     this.control.innerHTML = this.makeImageDescription(null);
     this.control.style.color = this.getHexColour();
-    if (disabled) this.control.classList.add('disabledControl');
+    if (disabled) this.control.classList.add("disabledControl");
     return this.control;
   }
 
   public updateControl(disabled: boolean, value: any): void {
-    this.control.setAttribute('class', disabled ? 'disabledControl' : '');
+    this.control.setAttribute("class", disabled ? "disabledControl" : "");
     this.control.innerHTML = this.makeImageDescription(value);
   }
 
   private makeImageDescription(img: HTMLImageElement): string {
     return `<i class="mdi mdi-file-image"></i> ${
-      img == null ? 'No Image' : `Image (${img.width} &times; ${img.height})`
+      img == null ? "No Image" : `Image (${img.width} &times; ${img.height})`
     }`;
   }
 
   public doPreviewSetup(element: HTMLElement): void {
-    element.classList.add('previewImage');
+    element.classList.add("previewImage");
   }
 
   public doPreviewRender(element: HTMLElement): void {
     let img: HTMLImageElement = this.getValue();
     // Clear the element
-    element.innerHTML = '';
+    element.innerHTML = "";
     if (img == null) {
       element.innerHTML = `<div class="previewEmpty"></div>`;
     } else {
@@ -91,12 +91,12 @@ export class TypeImage extends DataType {
     if (img == null) return null;
 
     // Create a canvas of the same width and height as the image
-    let canvas = document.createElement('canvas');
+    let canvas = document.createElement("canvas");
     canvas.width = img.width;
     canvas.height = img.height;
 
     // Find the canvas's rendering context
-    let ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext("2d");
 
     // Draw the image to the canvas
     ctx.drawImage(img, 0, 0);
@@ -108,7 +108,7 @@ export class TypeImage extends DataType {
     let newImg = new Image();
     // File format doesn't matter at this point, so just always use PNG because it supports transparency, meaning
     // that there's no risk of losing data.
-    newImg.src = canvas.toDataURL('image/png');
+    newImg.src = canvas.toDataURL("image/png");
 
     return newImg;
   }

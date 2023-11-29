@@ -1,5 +1,5 @@
-import { ConnectionPoint } from 'ConnectionPoint';
-import { DataType } from 'DataType';
+import { ConnectionPoint } from "ConnectionPoint";
+import { DataType } from "DataType";
 
 /**
  * @classdesc Represents decimal numbers.
@@ -11,11 +11,11 @@ export class TypeNumber extends DataType {
     if (other === true || other === false) return other + 0;
 
     // Special-case: empty string / null => default value
-    if (other === '' || other == null) return this.defaultValue();
+    if (other === "" || other == null) return this.defaultValue();
 
     let number = parseFloat(other);
 
-    if (isNaN(number)) throw new TypeError('Could not convert to a number!');
+    if (isNaN(number)) throw new TypeError("Could not convert to a number!");
 
     return number;
   }
@@ -25,16 +25,16 @@ export class TypeNumber extends DataType {
   }
 
   public getHexColour(): string {
-    return '#03A9F4';
+    return "#03A9F4";
   }
 
   public getName(): string {
-    return 'Number';
+    return "Number";
   }
 
   public makeControl(point: ConnectionPoint, disabled: boolean): HTMLElement {
-    let input = document.createElement('input');
-    input.type = 'number';
+    let input = document.createElement("input");
+    input.type = "number";
     input.value = this.getValue();
     input.disabled = disabled;
 
@@ -58,10 +58,10 @@ export class TypeNumber extends DataType {
   }
 
   public doPreviewSetup(element: HTMLElement): void {
-    element.classList.add('previewNumber');
+    element.classList.add("previewNumber");
   }
 
   public doPreviewRender(element: HTMLElement): void {
-    element.innerHTML = `<div>${this.getValue().toLocaleString('en-US')}</div>`;
+    element.innerHTML = `<div>${this.getValue().toLocaleString("en-US")}</div>`;
   }
 }

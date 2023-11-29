@@ -1,6 +1,6 @@
-import { NodeElement } from 'NodeElement';
-import { register } from 'Registry';
-import { TypeImage, TypeNumber } from 'types';
+import { NodeElement } from "NodeElement";
+import { register } from "Registry";
+import { TypeImage, TypeNumber } from "types";
 
 /**
  * @classdesc Get information about an image (e.g. width and height).
@@ -12,24 +12,24 @@ class NodeImageInfo extends NodeElement {
     super();
 
     this.setProperties({
-      name: 'Image Info',
-      description: 'Get information about an image (e.g. width and height)',
-      path: 'Image',
+      name: "Image Info",
+      description: "Get information about an image (e.g. width and height)",
+      path: "Image"
     })
       .addInlet({
-        name: 'Image',
-        description: 'The image',
-        type: new TypeImage(),
+        name: "Image",
+        description: "The image",
+        type: new TypeImage()
       })
       .addOutlet({
-        name: 'Width',
-        description: 'The width of the image (in pixels)',
-        type: new TypeNumber(),
+        name: "Width",
+        description: "The width of the image (in pixels)",
+        type: new TypeNumber()
       })
       .addOutlet({
-        name: 'Height',
-        description: 'The height of the image (in pixels)',
-        type: new TypeNumber(),
+        name: "Height",
+        description: "The height of the image (in pixels)",
+        type: new TypeNumber()
       })
       .setPreview(this.inlets[0])
       .build();

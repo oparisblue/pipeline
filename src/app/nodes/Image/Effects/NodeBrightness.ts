@@ -1,6 +1,6 @@
-import { register } from 'Registry';
-import { NodeImageTransformation } from '../NodeImageTransformation';
-import { ImageTransformationFunction, TypeNumber } from 'types';
+import { register } from "Registry";
+import { NodeImageTransformation } from "../NodeImageTransformation";
+import { ImageTransformationFunction, TypeNumber } from "types";
 
 /**
  * @classdesc Brighten or darken an image
@@ -9,13 +9,13 @@ import { ImageTransformationFunction, TypeNumber } from 'types';
 @register
 export class NodeBrightness extends NodeImageTransformation {
   constructor() {
-    super('Brightness', 'Brighten or darken an image', '/Effects');
+    super("Brightness", "Brighten or darken an image", "/Effects");
 
     this.addInlet({
-      name: 'Amount',
+      name: "Amount",
       description:
-        'The amount to brighten (or, if negative, darken) the image by',
-      type: new TypeNumber(),
+        "The amount to brighten (or, if negative, darken) the image by",
+      type: new TypeNumber()
     }).build();
   }
 

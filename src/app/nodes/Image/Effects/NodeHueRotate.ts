@@ -1,7 +1,7 @@
-import { register } from 'Registry';
-import { NodeImageTransformation } from '../NodeImageTransformation';
-import { ImageTransformationFunction, TypeNumber } from 'types';
-import { clamp, radians } from 'utils';
+import { register } from "Registry";
+import { NodeImageTransformation } from "../NodeImageTransformation";
+import { ImageTransformationFunction, TypeNumber } from "types";
+import { clamp, radians } from "utils";
 
 /**
  * @classdesc Hue rotate the colours of an image by a given amount of degrees
@@ -13,18 +13,18 @@ export class NodeHueRotate extends NodeImageTransformation {
   private matrix: number[][];
 
   constructor() {
-    super('Hue Rotate', 'Rotate the colours of an image', '/Effects');
+    super("Hue Rotate", "Rotate the colours of an image", "/Effects");
 
     this.addInlet({
-      name: 'Amount',
-      description: 'The amount to rotate the colour space',
-      type: new TypeNumber(),
+      name: "Amount",
+      description: "The amount to rotate the colour space",
+      type: new TypeNumber()
     }).build();
 
     this.matrix = [
       [1, 0, 0],
       [0, 1, 0],
-      [0, 0, 1],
+      [0, 0, 1]
     ];
   }
 

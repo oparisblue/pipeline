@@ -1,9 +1,9 @@
-import { ConnectionPoint } from './ConnectionPoint';
-import { IOSide } from './IOSide';
-import { application } from './Pipeline';
-import { Preview } from './Preview';
-import { PreviewConnectionPoint } from './previews';
-import { iterateEnum } from './utils';
+import { ConnectionPoint } from "./ConnectionPoint";
+import { IOSide } from "./IOSide";
+import { application } from "./Pipeline";
+import { Preview } from "./Preview";
+import { PreviewConnectionPoint } from "./previews";
+import { iterateEnum } from "./utils";
 
 /**
  * @classdesc A node represents one of the nodes which make up the pipeline graph.
@@ -16,10 +16,10 @@ export abstract class NodeElement {
   public dragOffsetX: number;
   public dragOffsetY: number;
 
-  protected name: string = '';
-  protected description: string = 'No summary available.';
-  protected help: string = 'No help available.';
-  protected path: string[] = ['Misc'];
+  protected name: string = "";
+  protected description: string = "No summary available.";
+  protected help: string = "No help available.";
+  protected path: string[] = ["Misc"];
   protected appearsInAddGUI: boolean = true;
   protected topUI: HTMLElement = null;
   protected bottomUI: HTMLElement = null;
@@ -43,15 +43,15 @@ export abstract class NodeElement {
    * @return {NodeElement} The current node, so that you can chain configuration functions.
    */
   public setProperties(properties: any): NodeElement {
-    if ('name' in properties) this.name = properties.name;
+    if ("name" in properties) this.name = properties.name;
 
-    if ('description' in properties) this.description = properties.description;
+    if ("description" in properties) this.description = properties.description;
 
-    if ('help' in properties) this.help = properties.help;
+    if ("help" in properties) this.help = properties.help;
 
     // Remove the trailing slash (if any), and then split by slashes - e.g. "Math/Basic/" => ["Math", "Basic"]
-    if ('path' in properties)
-      this.path = (properties.path || 'Misc').replace(/\/$/, '').split('/');
+    if ("path" in properties)
+      this.path = (properties.path || "Misc").replace(/\/$/, "").split("/");
 
     return this;
   }
@@ -71,7 +71,7 @@ export abstract class NodeElement {
     this.inlets.push(
       new ConnectionPoint(
         properties.name,
-        properties.description || '',
+        properties.description || "",
         properties.type,
         this
       )
@@ -94,7 +94,7 @@ export abstract class NodeElement {
     this.outlets.push(
       new ConnectionPoint(
         properties.name,
-        properties.description || '',
+        properties.description || "",
         properties.type,
         this
       )
@@ -158,8 +158,8 @@ export abstract class NodeElement {
    */
   public build(): void {
     // Ensure that the node has a name
-    if (this.name == '') {
-      throw new Error('All nodes must declare a name!');
+    if (this.name == "") {
+      throw new Error("All nodes must declare a name!");
     }
 
     // Assign sides to the connection points
@@ -171,17 +171,17 @@ export abstract class NodeElement {
     });
 
     // Main node
-    this.element = document.createElement('div');
-    this.element.classList.add('node');
+    this.element = document.createElement("div");
+    this.element.classList.add("node");
 
-    let title = document.createElement('div');
-    title.classList.add('title');
+    let title = document.createElement("div");
+    title.classList.add("title");
 
     // Delete button
-    let deleteButton = document.createElement('div');
+    let deleteButton = document.createElement("div");
     deleteButton.innerHTML = `<i class="mdi mdi-delete"></i>`;
-    deleteButton.classList.add('nodeDelete');
-    deleteButton.title = 'Delete Node';
+    deleteButton.classList.add("nodeDelete");
+    deleteButton.title = "Delete Node";
     deleteButton.onclick = () => {
       // Cleanup
       this.onBeforeDelete();
@@ -224,8 +224,8 @@ export abstract class NodeElement {
     this.element.appendChild(title);
 
     // Preview pane
-    this.previewPane = document.createElement('div');
-    this.previewPane.classList.add('preview');
+    this.previewPane = document.createElement("div");
+    this.previewPane.classList.add("preview");
     this.element.appendChild(this.previewPane);
 
     // Top UI (if any)
@@ -234,7 +234,7 @@ export abstract class NodeElement {
     }
 
     // Inlets & Outlets panes
-    let patchboard = document.createElement('table');
+    let patchboard = document.createElement("table");
 
     let points: ConnectionPoint[][] = [this.inlets, this.outlets];
 
@@ -242,35 +242,35 @@ export abstract class NodeElement {
     for (let side of iterateEnum(IOSide)) {
       // Loop through all of the connection points for each side
       for (let point of points[side]) {
-        let empty = document.createElement('td');
+        let empty = document.createElement("td");
 
         // The plug that the user can use to wire an input to another node
-        let plugColumn = document.createElement('td');
-        let plug = document.createElement('div');
-        plug.classList.add('plug');
+        let plugColumn = document.createElement("td");
+        let plug = document.createElement("div");
+        plug.classList.add("plug");
         plug.style.borderColor = point.getType().getActualHexColour();
-        plug.addEventListener('mousedown', () => {
+        plug.addEventListener("mousedown", () => {
           application.connections.makeConnection(point);
         });
-        plug.addEventListener('mouseup', () => {
+        plug.addEventListener("mouseup", () => {
           application.connections.makeConnection(point);
         });
         plugColumn.appendChild(plug);
 
         // The label for the field
-        let label = document.createElement('td');
+        let label = document.createElement("td");
         label.title = point.getDescription();
-        label.innerText = point.getName() + ':';
+        label.innerText = point.getName() + ":";
 
         // The field which can be used to edit the input manually
-        let control = document.createElement('td');
+        let control = document.createElement("td");
         control.appendChild(
           point.getType().makeControl(point, side == IOSide.Output)
         ); // Disable editing if this is an output field
 
         // Add everything into a row, and add that to the table
         // Ensures that the plug is on the left side for input, and the right side for output
-        let row = document.createElement('tr');
+        let row = document.createElement("tr");
         row.appendChild(side == IOSide.Input ? plugColumn : empty);
         row.appendChild(label);
         row.appendChild(control);
@@ -280,7 +280,7 @@ export abstract class NodeElement {
 
       // Add a divider between the two sides
       if (side == IOSide.Input) {
-        let divider = document.createElement('tr');
+        let divider = document.createElement("tr");
         divider.innerHTML = `<td colspan="4"><div class="divider"></div></td>`;
         patchboard.appendChild(divider);
       }
@@ -300,7 +300,7 @@ export abstract class NodeElement {
   public updatePlugPositions(): void {
     let points: ConnectionPoint[][] = [this.inlets, this.outlets];
 
-    let plugs = this.element.querySelectorAll('.plug');
+    let plugs = this.element.querySelectorAll(".plug");
 
     if (plugs.length == 0) return;
 

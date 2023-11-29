@@ -1,6 +1,6 @@
-import { DataType } from 'DataType';
-import { TypeUnknown } from './TypeUnknown';
-import { ConnectionPoint } from 'ConnectionPoint';
+import { DataType } from "DataType";
+import { TypeUnknown } from "./TypeUnknown";
+import { ConnectionPoint } from "ConnectionPoint";
 
 /**
  * @classdesc Represents _any_ type. For meta operations, like Split, etc.
@@ -19,11 +19,11 @@ export class TypeAny extends DataType {
   }
 
   public getActualHexColour(): string {
-    return '#FFC107';
+    return "#FFC107";
   }
 
   public makeControl(_point: ConnectionPoint, _disabled: boolean): HTMLElement {
-    this.control = document.createElement('span');
+    this.control = document.createElement("span");
     this.changeControlText();
     return this.control;
   }
@@ -45,8 +45,8 @@ export class TypeAny extends DataType {
 
   public doPreviewRender(element: HTMLElement): void {
     // Clear the current preview, and reset the preview window
-    element.innerHTML = '';
-    element.setAttribute('class', 'preview');
+    element.innerHTML = "";
+    element.setAttribute("class", "preview");
 
     // Attempt to show a preview based off of the other type
     this.otherType.doPreviewSetup(element);

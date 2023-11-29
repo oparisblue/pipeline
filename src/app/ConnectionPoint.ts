@@ -1,7 +1,7 @@
-import { TypeUnknown } from 'types';
-import { DataType } from './DataType';
-import { IOSide } from './IOSide';
-import { NodeElement } from './NodeElement';
+import { TypeUnknown } from "types";
+import { DataType } from "./DataType";
+import { IOSide } from "./IOSide";
+import { NodeElement } from "./NodeElement";
 
 export class ConnectionPoint {
   private name: string;

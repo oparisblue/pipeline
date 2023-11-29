@@ -1,5 +1,5 @@
-import { ConnectionPoint } from 'ConnectionPoint';
-import { DataType } from 'DataType';
+import { ConnectionPoint } from "ConnectionPoint";
+import { DataType } from "DataType";
 
 /**
  * @classdesc To be used in places where another type cannot be worked out. You probably want {@link TypeAny} instead.
@@ -15,15 +15,15 @@ export class TypeUnknown extends DataType {
   }
 
   public getHexColour(): string {
-    return '#FFC107';
+    return "#FFC107";
   }
 
   public getName(): string {
-    return 'Anything';
+    return "Anything";
   }
 
   public makeControl(_point: ConnectionPoint, _disabled: boolean): HTMLElement {
-    return document.createElement('span');
+    return document.createElement("span");
   }
 
   doPreviewRender(element: HTMLElement): void {

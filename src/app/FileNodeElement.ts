@@ -1,4 +1,4 @@
-import { NodeElement } from './NodeElement';
+import { NodeElement } from "./NodeElement";
 
 /**
  * @classdesc

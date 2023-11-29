@@ -1,6 +1,6 @@
-import { register } from 'Registry';
-import { NodeImageTransformation } from '../NodeImageTransformation';
-import { ImageTransformationFunction, TypeNumber } from 'types';
+import { register } from "Registry";
+import { NodeImageTransformation } from "../NodeImageTransformation";
+import { ImageTransformationFunction, TypeNumber } from "types";
 
 /**
  * @classdesc Threshold an image - e.g. every pixel under the threshold value is black, every pixel over it is white.
@@ -10,9 +10,9 @@ import { ImageTransformationFunction, TypeNumber } from 'types';
 export class NodeThreshold extends NodeImageTransformation {
   constructor() {
     super(
-      'Threshold',
-      'Threshold an image - e.g. every pixel under the threshold value is black, every pixel over it is white',
-      '/Effects'
+      "Threshold",
+      "Threshold an image - e.g. every pixel under the threshold value is black, every pixel over it is white",
+      "/Effects"
     );
 
     // Set the initial threshold value to be halfway (e.g. pure gray)
@@ -20,9 +20,9 @@ export class NodeThreshold extends NodeImageTransformation {
     initialValue.setValue(128, null);
 
     this.addInlet({
-      name: 'Threshold',
-      description: 'The threshold value',
-      type: initialValue,
+      name: "Threshold",
+      description: "The threshold value",
+      type: initialValue
     }).build();
   }
 

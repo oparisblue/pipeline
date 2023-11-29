@@ -1,6 +1,6 @@
-import { NodeElement } from 'NodeElement';
-import { register } from 'Registry';
-import { TypeNumber } from 'types';
+import { NodeElement } from "NodeElement";
+import { register } from "Registry";
+import { TypeNumber } from "types";
 
 /**
  * @classdesc Takes in two numbers, and adds them together.
@@ -12,24 +12,24 @@ export class NodeMultiply extends NodeElement {
     super();
 
     this.setProperties({
-      name: 'Multiply',
-      description: 'Multiply two numbers',
-      path: 'Maths/Basic',
+      name: "Multiply",
+      description: "Multiply two numbers",
+      path: "Maths/Basic"
     })
       .addInlet({
-        name: 'X',
-        description: 'The first number',
-        type: new TypeNumber(),
+        name: "X",
+        description: "The first number",
+        type: new TypeNumber()
       })
       .addInlet({
-        name: 'Y',
-        description: 'The second number',
-        type: new TypeNumber(),
+        name: "Y",
+        description: "The second number",
+        type: new TypeNumber()
       })
       .addOutlet({
-        name: 'Result',
-        description: 'The result of X * Y',
-        type: new TypeNumber(),
+        name: "Result",
+        description: "The result of X * Y",
+        type: new TypeNumber()
       })
       .setPreview(this.outlets[0])
       .build();

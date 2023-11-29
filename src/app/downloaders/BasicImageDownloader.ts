@@ -1,5 +1,5 @@
-import { Downloader } from 'Downloader';
-import { downloadStrategy } from 'Registry';
+import { Downloader } from "Downloader";
+import { downloadStrategy } from "Registry";
 
 /**
  * @classdesc An abstract downloader that's capable of downloading basic kinds of images - e.g. those supported in canvas out-of-the-box
@@ -15,15 +15,15 @@ export abstract class DownloaderImages extends Downloader {
     let img = <HTMLImageElement>data;
 
     // Make a canvas with the image on it
-    let canvas = document.createElement('canvas');
+    let canvas = document.createElement("canvas");
     canvas.width = img.width;
     canvas.height = img.height;
-    let ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
 
     // Download the image
     this.downloadDataURL(
-      canvas.toDataURL('image/' + this.getExtension().slice(1).toLowerCase())
+      canvas.toDataURL("image/" + this.getExtension().slice(1).toLowerCase())
     );
   }
 }
@@ -33,13 +33,13 @@ export abstract class DownloaderImages extends Downloader {
 @downloadStrategy
 export class DownloaderPNG extends DownloaderImages {
   public getExtension(): string {
-    return '.PNG';
+    return ".PNG";
   }
 }
 
 @downloadStrategy
 export class DownloaderJPEG extends DownloaderImages {
   public getExtension(): string {
-    return '.JPEG';
+    return ".JPEG";
   }
 }

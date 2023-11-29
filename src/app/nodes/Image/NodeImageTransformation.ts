@@ -1,5 +1,5 @@
-import { NodeElement } from 'NodeElement';
-import { ImageTransformationFunction, TypeImage } from 'types';
+import { NodeElement } from "NodeElement";
+import { ImageTransformationFunction, TypeImage } from "types";
 
 /**
  * @classdesc A base class containing all the boilerplate code for nodes that do some combination of
@@ -7,23 +7,23 @@ import { ImageTransformationFunction, TypeImage } from 'types';
  * @author Orlando
  */
 export abstract class NodeImageTransformation extends NodeElement {
-  constructor(name: string, description: string, subfolder: string = '') {
+  constructor(name: string, description: string, subfolder: string = "") {
     super();
 
     this.setProperties({
       name: name,
       description: description,
-      path: 'Image' + subfolder,
+      path: "Image" + subfolder
     })
       .addInlet({
-        name: 'Image',
-        description: 'The initial image',
-        type: new TypeImage(),
+        name: "Image",
+        description: "The initial image",
+        type: new TypeImage()
       })
       .addOutlet({
-        name: 'Output',
-        description: 'The transformed image',
-        type: new TypeImage(),
+        name: "Output",
+        description: "The transformed image",
+        type: new TypeImage()
       })
       .setPreview(this.outlets[0])
       .build();

@@ -1,6 +1,6 @@
-import { register } from 'Registry';
-import { NodeImageTransformation } from './NodeImageTransformation';
-import { ImageTransformationFunction } from 'types';
+import { register } from "Registry";
+import { NodeImageTransformation } from "./NodeImageTransformation";
+import { ImageTransformationFunction } from "types";
 
 /**
  * @classdesc Flips an image horizontally (across the X axis)
@@ -10,8 +10,8 @@ import { ImageTransformationFunction } from 'types';
 export class NodeFlipImageHorizontal extends NodeImageTransformation {
   constructor() {
     super(
-      'Flip Image Horizontally',
-      'Flips an image horizontally (across the X axis)'
+      "Flip Image Horizontally",
+      "Flips an image horizontally (across the X axis)"
     );
   }
 

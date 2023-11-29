@@ -1,6 +1,6 @@
-import { register } from 'Registry';
-import { NodeImageTransformation } from '../NodeImageTransformation';
-import { ImageTransformationFunction } from 'types';
+import { register } from "Registry";
+import { NodeImageTransformation } from "../NodeImageTransformation";
+import { ImageTransformationFunction } from "types";
 
 /**
  * @classdesc Invert the colours of the image
@@ -9,7 +9,7 @@ import { ImageTransformationFunction } from 'types';
 @register
 export class NodeInvert extends NodeImageTransformation {
   constructor() {
-    super('Invert', 'Invert the colours of the image', '/Effects');
+    super("Invert", "Invert the colours of the image", "/Effects");
   }
 
   protected transformation: ImageTransformationFunction = (

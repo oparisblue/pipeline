@@ -1,5 +1,5 @@
-import { Downloader } from 'Downloader';
-import { downloadStrategy } from 'Registry';
+import { Downloader } from "Downloader";
+import { downloadStrategy } from "Registry";
 
 /**
  * @classdesc Download strings and numbers, etc, as text files
@@ -8,17 +8,17 @@ import { downloadStrategy } from 'Registry';
 @downloadStrategy
 export class DownloaderText extends Downloader {
   public canAccept(data: any): boolean {
-    return typeof data == 'string' || typeof data == 'number';
+    return typeof data == "string" || typeof data == "number";
   }
 
   public download(data: any): void {
     // Download the text
     this.downloadDataURL(
-      'data:text/plain;charset=UTF-8,' + encodeURIComponent(data)
+      "data:text/plain;charset=UTF-8," + encodeURIComponent(data)
     );
   }
 
   public getExtension(): string {
-    return '.TXT';
+    return ".TXT";
   }
 }

@@ -1,6 +1,6 @@
-import { FileNodeElement } from './FileNodeElement';
-import { application } from './Pipeline';
-import { fileHandlerRegistry } from './Registry';
+import { FileNodeElement } from "./FileNodeElement";
+import { application } from "./Pipeline";
+import { fileHandlerRegistry } from "./Registry";
 
 /**
  * @classdesc Deal with uploading files and creating nodes from them.
@@ -10,7 +10,7 @@ export class UploadManager {
   private dragPreview: HTMLElement;
 
   constructor() {
-    this.dragPreview = $('#dragPreview');
+    this.dragPreview = $("#dragPreview");
   }
 
   /**
@@ -19,32 +19,32 @@ export class UploadManager {
    * @param event The event data.
    */
   handleDrag(
-    type: 'dragenter' | 'dragover' | 'dragleave' | 'drop',
+    type: "dragenter" | "dragover" | "dragleave" | "drop",
     event: DragEvent
   ): void {
     event.preventDefault();
     event.stopPropagation();
 
     // Show the node preview when the dragging begins
-    if (type == 'dragenter') {
-      this.dragPreview.style.display = 'block';
-      $('#helperText').style.display = 'none';
-      application.main.classList.add('preventInteraction');
+    if (type == "dragenter") {
+      this.dragPreview.style.display = "block";
+      $("#helperText").style.display = "none";
+      application.main.classList.add("preventInteraction");
     }
 
     // Move the node preview as the mouse is moved
-    if (type == 'dragenter' || type == 'dragover') {
-      this.dragPreview.style.left = event.clientX - 103 + 'px';
-      this.dragPreview.style.top = event.clientY - 82 + 'px';
+    if (type == "dragenter" || type == "dragover") {
+      this.dragPreview.style.left = event.clientX - 103 + "px";
+      this.dragPreview.style.top = event.clientY - 82 + "px";
     }
 
     // Hide the node preview if the file has been dragged away or dropped
-    else if (type == 'dragleave') {
+    else if (type == "dragleave") {
       this.resetDraggingGUI();
     }
 
     // If the file has been dropped, try to make a node for it
-    else if (type == 'drop') {
+    else if (type == "drop") {
       // Get the first file, as we don't support multi-file upload (yet)
       let file = event.dataTransfer.files[0];
 
@@ -61,7 +61,7 @@ export class UploadManager {
         // The content type, as interpreted by the browser - e.g. "image/png". Can be more accurate than extension checking in some places, but not always.
         let contentType = file.type;
         // As a last resort, check the file extension - e.g. "png". This can easily be fooled, e.g. by renaming a file from ".png" to ".jpg", etc.
-        let extension = file.name.split('.').pop().toLowerCase();
+        let extension = file.name.split(".").pop().toLowerCase();
 
         // Now, find a class capable of handling this kind of file
         // We want the highest match of magic number + content type + extension as possible in case there are conflicts
@@ -97,7 +97,7 @@ export class UploadManager {
           if (node instanceof FileNodeElement) {
             // Read in the file in Base64
             let base64 = btoa(
-              bytes.reduce((acc, val) => acc + String.fromCharCode(val), '')
+              bytes.reduce((acc, val) => acc + String.fromCharCode(val), "")
             );
 
             // Create the node, at the position of the preview element
@@ -125,7 +125,7 @@ export class UploadManager {
    */
   private getMagicNumber(file: Uint8Array): number {
     return parseInt(
-      file.subarray(0, 4).reduce((acc, val) => acc + val.toString(16), ''),
+      file.subarray(0, 4).reduce((acc, val) => acc + val.toString(16), ""),
       16
     );
   }
@@ -134,8 +134,8 @@ export class UploadManager {
    * Reset the dragging GUI when a file is dropped or dragged off-screen.
    */
   private resetDraggingGUI(): void {
-    $('#dragPreview').style.display = 'none';
-    application.main.classList.remove('preventInteraction');
+    $("#dragPreview").style.display = "none";
+    application.main.classList.remove("preventInteraction");
     application.updateState();
   }
 

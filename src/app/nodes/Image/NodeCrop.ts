@@ -1,7 +1,7 @@
-import { register } from 'Registry';
-import { NodeImageTransformation } from './NodeImageTransformation';
-import { ImageTransformationFunction, TypeNumber } from 'types';
-import { PreviewCrop } from 'previews';
+import { register } from "Registry";
+import { NodeImageTransformation } from "./NodeImageTransformation";
+import { ImageTransformationFunction, TypeNumber } from "types";
+import { PreviewCrop } from "previews";
 
 /**
  * @classdesc Crop an image.
@@ -10,31 +10,31 @@ import { PreviewCrop } from 'previews';
 @register
 export class NodeCrop extends NodeImageTransformation {
   constructor() {
-    super('Crop', 'Crop an image');
+    super("Crop", "Crop an image");
 
     this.addInlet({
-      name: 'Top-Left X',
+      name: "Top-Left X",
       description:
         "The X (horizontal) position of crop rectangle's top-left corner",
-      type: new TypeNumber(),
+      type: new TypeNumber()
     })
       .addInlet({
-        name: 'Top-Left Y',
+        name: "Top-Left Y",
         description:
           "The Y (vertical) position of crop rectangle's top-left corner",
-        type: new TypeNumber(),
+        type: new TypeNumber()
       })
       .addInlet({
-        name: 'Bottom-Right X',
+        name: "Bottom-Right X",
         description:
           "The X (horizontal) position of crop rectangle's bottom-right corner",
-        type: new TypeNumber(),
+        type: new TypeNumber()
       })
       .addInlet({
-        name: 'Bottom-Right Y',
+        name: "Bottom-Right Y",
         description:
           "The Y (vertical) position of crop rectangle's bottom-right corner",
-        type: new TypeNumber(),
+        type: new TypeNumber()
       })
       .setPreview(new PreviewCrop(this))
       .build();

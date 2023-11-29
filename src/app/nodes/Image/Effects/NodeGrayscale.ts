@@ -1,6 +1,6 @@
-import { register } from 'Registry';
-import { NodeImageTransformation } from '../NodeImageTransformation';
-import { ImageTransformationFunction } from 'types';
+import { register } from "Registry";
+import { NodeImageTransformation } from "../NodeImageTransformation";
+import { ImageTransformationFunction } from "types";
 
 /**
  * @classdesc Convert an image to black and white (grayscale)
@@ -10,9 +10,9 @@ import { ImageTransformationFunction } from 'types';
 export class NodeGrayscale extends NodeImageTransformation {
   constructor() {
     super(
-      'Grayscale',
-      'Convert an image to black and white (grayscale)',
-      '/Effects'
+      "Grayscale",
+      "Convert an image to black and white (grayscale)",
+      "/Effects"
     );
   }
 

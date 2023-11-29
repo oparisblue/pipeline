@@ -1,15 +1,15 @@
-import { ConnectionManager } from './ConnectionManager';
-import { NodeDatabase } from './NodeDatabase';
-import { NodeElement } from './NodeElement';
-import { UploadManager } from './UploadManager';
+import { ConnectionManager } from "./ConnectionManager";
+import { NodeDatabase } from "./NodeDatabase";
+import { NodeElement } from "./NodeElement";
+import { UploadManager } from "./UploadManager";
 
 // Import everything so that they get included in the build,
 // as esbuild optimises away classes that are only recognised
 // by decorators.
-import * as Downloaders from './downloaders';
-import * as Previews from './previews';
-import * as Nodes from './nodes';
-import * as types from './types';
+import * as Downloaders from "./downloaders";
+import * as Previews from "./previews";
+import * as Nodes from "./nodes";
+import * as types from "./types";
 
 function nop(_item: any) {}
 
@@ -34,7 +34,7 @@ export class Pipeline {
   private nodes: NodeElement[] = [];
 
   constructor() {
-    this.main = $('#main');
+    this.main = $("#main");
 
     this.connections = new ConnectionManager();
     this.nodeDatabase = new NodeDatabase();
@@ -53,9 +53,9 @@ export class Pipeline {
       // Drag the current node (if any)
       if (this.draggingNode != null) {
         this.draggingNode.getElement().style.left =
-          this.mouseX - this.draggingNode.dragOffsetX + 'px';
+          this.mouseX - this.draggingNode.dragOffsetX + "px";
         this.draggingNode.getElement().style.top =
-          this.mouseY - this.draggingNode.dragOffsetY + 'px';
+          this.mouseY - this.draggingNode.dragOffsetY + "px";
         this.draggingNode.updatePlugPositions();
       }
     };
@@ -99,16 +99,16 @@ export class Pipeline {
         if (rect.x > window.innerWidth) rightCheck = true;
         if (rect.y > window.innerHeight) bottomCheck = true;
 
-        element.style.top = top + 'px';
-        element.style.left = left + 'px';
+        element.style.top = top + "px";
+        element.style.left = left + "px";
 
         node.updatePlugPositions();
       });
 
-      $('#indicator-top').style.display = topCheck ? 'block' : 'none';
-      $('#indicator-right').style.display = rightCheck ? 'block' : 'none';
-      $('#indicator-bottom').style.display = bottomCheck ? 'block' : 'none';
-      $('#indicator-left').style.display = leftCheck ? 'block' : 'none';
+      $("#indicator-top").style.display = topCheck ? "block" : "none";
+      $("#indicator-right").style.display = rightCheck ? "block" : "none";
+      $("#indicator-bottom").style.display = bottomCheck ? "block" : "none";
+      $("#indicator-left").style.display = leftCheck ? "block" : "none";
     };
 
     // Prevent right-click
@@ -118,12 +118,12 @@ export class Pipeline {
     };
 
     // Drag-and-drop to create nodes from files
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((type) => {
+    ["dragenter", "dragover", "dragleave", "drop"].forEach((type) => {
       window.addEventListener(
         type,
         (event: DragEvent) => {
           this.uploadManager.handleDrag(
-            <'dragenter' | 'dragover' | 'dragleave' | 'drop'>type,
+            <"dragenter" | "dragover" | "dragleave" | "drop">type,
             event
           );
         },
@@ -143,8 +143,8 @@ export class Pipeline {
 
   public updateState(): void {
     // Hide and show the helper text
-    $('#helperText').style.display =
-      this.main.childElementCount == 0 ? 'block' : 'none';
+    $("#helperText").style.display =
+      this.main.childElementCount == 0 ? "block" : "none";
   }
 
   /**
@@ -175,8 +175,8 @@ export class Pipeline {
 
     // Add the node's element to the page, at the current mouse position
     let element: HTMLElement = node.getElement();
-    element.style.left = x + 'px';
-    element.style.top = y + 'px';
+    element.style.left = x + "px";
+    element.style.top = y + "px";
     this.main.appendChild(element);
 
     // Run the preview function for the node
