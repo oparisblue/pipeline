@@ -1,12 +1,14 @@
 {
-	"scripts": {
-		"start": "cp -R ./src/static/* ./build/; sass ./src/style/style.scss:./build/style.css; concurrently \"esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js --watch\" \"sass ./src/style/style.scss:./build/style.css\" \"http-server -c-1 -s -o ./build/\"",
-		"build": "mkdir ./build/; cp -R ./src/static/* ./build/; sass ./src/style/style.scss:./build/style.css; esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js"
-	},
-	"devDependencies": {
-		"concurrently": "^8.2.1",
-		"esbuild": "^0.19.3",
-		"http-server": "^14.1.1",
-		"sass": "^1.68.0"
-	}
+  "scripts": {
+    "start": "cp -R ./src/static/* ./build/; sass ./src/style/style.scss:./build/style.css; concurrently \"esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js --watch\" \"sass ./src/style/style.scss:./build/style.css\" \"http-server -c-1 -s -o ./build/\"",
+    "build": "mkdir ./build/; cp -R ./src/static/* ./build/; sass ./src/style/style.scss:./build/style.css; esbuild ./src/app/Pipeline.ts --bundle --outfile=./build/bundle.min.js",
+    "prettier:format": "prettier --config .prettierrc.json 'src/**/*.ts' 'src/**/*.scss' --write"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "esbuild": "^0.19.3",
+    "http-server": "^14.1.1",
+    "prettier": "^3.1.0",
+    "sass": "^1.68.0"
+  }
 }
