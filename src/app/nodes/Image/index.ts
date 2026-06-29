@@ -8,3 +8,4 @@ export * from "./NodeFlipImageVertical";
 export * from "./NodeImage";
 export * from "./NodeImageInfo";
 export * from "./NodeImageTransformation";
+export * from "./NodeResize";
