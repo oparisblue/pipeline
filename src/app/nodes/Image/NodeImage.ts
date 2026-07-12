@@ -14,6 +14,9 @@ import { TypeImage } from "types";
   ["image/jpeg"],
   ["jpg", "jpeg"]
 )
+// WebP is a RIFF container; its magic isn't unique in the first 4 bytes we read,
+// so match on content type + extension only. Decoded natively via new Image().
+@fileFormat(null, ["image/webp"], ["webp"])
 export class NodeImage extends FileNodeElement {
   constructor() {
     super();
