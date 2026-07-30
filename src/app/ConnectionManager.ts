@@ -69,41 +69,43 @@ export class ConnectionManager {
       // If they are e.g. both inlets or both outlets ignore the click
       if (inlet.side != IOSide.Input || outlet.side != IOSide.Output) return;
 
-      // Check that there is no circular link
-      if (this.checkCircularLink(outlet.getNode(), inlet.getNode())) return;
-
-      // Ensure there won't be a type error
-      let typeError = true;
-
-      try {
-        // Ensure that we can cast in both directions - if this produces an error then we can't make the connection
-        inlet.getType().cast(outlet.getType().getValue());
-        outlet.getType().cast(inlet.getType().getValue());
-
-        // Only runs if the preceding statement doesn't error
-        typeError = false;
-      } catch (e) {}
-
-      if (typeError) return;
-
-      // Stop drawing the line to the mouse cursor
-      this.isDrawing = false;
-
-      // Create the bi-directional relationship
-      outlet.setLinkedNode(inlet);
-      inlet.setLinkedNode(outlet);
-
-      // Update the node belonging to the inlet
-      outlet.updateLinkedNode();
-
-      // Add this line to the set that needs to be tracked
-      this.lines.push([inlet, outlet]);
+      // Stop drawing the line to the mouse cursor once the connection is established
+      if (this.connect(outlet, inlet)) this.isDrawing = false;
     }
     // Otherwise, if we are not currently drawing a connection, start drawing one from this plug
     else {
       this.isDrawing = true;
       this.startingPoint = point;
     }
+  }
+
+  /**
+   * Wire an outlet to an inlet, if that connection is valid.
+   * @param outlet The point to take values from.
+   * @param inlet The point to send values to.
+   * @return `true` if the connection was made.
+   */
+  public connect(outlet: ConnectionPoint, inlet: ConnectionPoint): boolean {
+    // Each plug can only hold one wire
+    if (outlet.hasLink() || inlet.hasLink()) return false;
+
+    // Check that there is no circular link
+    if (this.checkCircularLink(outlet.getNode(), inlet.getNode())) return false;
+
+    // Ensure there won't be a type error
+    if (!outlet.getType().canConnectTo(inlet.getType())) return false;
+
+    // Create the bi-directional relationship
+    outlet.setLinkedNode(inlet);
+    inlet.setLinkedNode(outlet);
+
+    // Update the node belonging to the inlet
+    outlet.updateLinkedNode();
+
+    // Add this line to the set that needs to be tracked
+    this.lines.push([inlet, outlet]);
+
+    return true;
   }
 
   /**
@@ -196,6 +198,13 @@ export class ConnectionManager {
    */
   public isDrawingLine(): boolean {
     return this.isDrawing;
+  }
+
+  /**
+   * @return The plug that the line currently being drawn started from.
+   */
+  public getStartingPoint(): ConnectionPoint {
+    return this.startingPoint;
   }
 
   /**

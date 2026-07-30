@@ -64,6 +64,14 @@ export abstract class DataType {
   }
 
   /**
+   * Checks if a wire could carry values between this data type and another.
+   * @return {boolean} `true` if both types can cast to each other.
+   */
+  public canConnectTo(other: DataType): boolean {
+    return this.canCast(other) && other.canCast(this);
+  }
+
+  /**
    * Get the current value stored in this data type.
    */
   public getValue(): any {

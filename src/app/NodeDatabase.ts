@@ -1,3 +1,5 @@
+import { ConnectionPoint } from "./ConnectionPoint";
+import { IOSide } from "./IOSide";
 import { NodeElement } from "./NodeElement";
 import { application } from "./Pipeline";
 import { registry } from "./Registry";
@@ -10,14 +12,20 @@ import { registry } from "./Registry";
  */
 export class NodeDatabase {
   // Database objects are in the form
-  //     {name: string, description: string, path: string[], constructor: Function}
+  //     {name: string, description: string, path: string[], instance: NodeElement, construct: Function}
   // There are two lookup methods: a lookup by category, and a lookup by name. Both return references to the same object.
 
-  // e.g. [{...}, {...}]
+  // Every known node, e.g. [{...}, {...}]
   private db: Object[] = [];
 
-  // e.g. {"Math": {"Basic": {"_nodes": [...]}, "_nodes": [...]}, "Util": {"_nodes": [...]}, "_nodes": [...]}
+  // The nodes the add node UI is currently offering; all of them, unless narrowed by `from`
+  private shownDb: Object[] = [];
+
+  // `shownDb` by category, e.g. {"Math": {"Basic": {"_nodes": [...]}, "_nodes": [...]}, "Util": {"_nodes": [...]}, "_nodes": [...]}
   private dbByCategory: Object = { _nodes: [] };
+
+  // The plug a line was dragged off from, which the added node should be wired up to
+  private from: ConnectionPoint = null;
 
   constructor() {
     // Build the database, using the array of classes found by @register
@@ -30,34 +38,15 @@ export class NodeDatabase {
         // Ensure that it should be added to the database before proceeding
         if (!clazz.isNodeAddable()) continue;
 
-        // Create the database object
-        let obj = {
+        // Create the database object. The instance is kept so that the plugs the node
+        // declares can be inspected without having to make another one.
+        this.db.push({
           name: clazz.getName(),
           description: clazz.getDescription(),
           path: clazz.getPath(),
+          instance: clazz,
           construct: candidate
-        };
-
-        // Add it to the simple representation
-        this.db.push(obj);
-
-        // Add it to the categorical representation
-        let currentLevel = this.dbByCategory;
-        for (let i = 0; i < obj.path.length; i++) {
-          // If this category does not yet exist, add it
-          if (!(obj.path[i] in currentLevel)) {
-            let newLevel = { _nodes: [] };
-            currentLevel[obj.path[i]] = newLevel;
-            currentLevel = newLevel;
-          }
-          // Otherwise, use the level that already exists
-          else {
-            currentLevel = currentLevel[obj.path[i]];
-          }
-
-          // If this is the last level in the path, then add the object at this point
-          if (i == obj.path.length - 1) currentLevel["_nodes"].push(obj);
-        }
+        });
       } else {
         // Notify of bad @register usage rather than just failing silently
         console.warn(
@@ -68,10 +57,67 @@ export class NodeDatabase {
   }
 
   /**
+   * Build the categorical representation of a list of nodes.
+   * @param {Object[]} nodes The nodes to include.
+   * @return {Object} e.g. {"Math": {"Basic": {"_nodes": [...]}, "_nodes": [...]}, "_nodes": [...]}
+   */
+  private buildCategoryTree(nodes: Object[]): Object {
+    let tree = { _nodes: [] };
+
+    for (let node of nodes) {
+      let path: string[] = node["path"];
+      let currentLevel = tree;
+
+      for (let i = 0; i < path.length; i++) {
+        // Add this category if it does not yet exist, then step into it
+        if (!(path[i] in currentLevel)) currentLevel[path[i]] = { _nodes: [] };
+        currentLevel = currentLevel[path[i]];
+
+        // If this is the last level in the path, then add the node at this point
+        if (i == path.length - 1) currentLevel["_nodes"].push(node);
+      }
+    }
+
+    return tree;
+  }
+
+  /**
+   * Find the first free plug on a node that a given plug could be wired to.
+   * @param {NodeElement} node The node to search.
+   * @param {ConnectionPoint} from The plug to connect to.
+   * @return {ConnectionPoint} The plug found, or `null` if the node has none.
+   */
+  private findPointFor(
+    node: NodeElement,
+    from: ConnectionPoint
+  ): ConnectionPoint {
+    // A line from an outlet needs an inlet to land in, and vice versa
+    let points = from.side == IOSide.Output ? node.inlets : node.outlets;
+
+    return (
+      points.find(
+        (point) =>
+          !point.hasLink() && point.getType().canConnectTo(from.getType())
+      ) || null
+    );
+  }
+
+  /**
    * Display the add node UI at the mouse pointer.
    * From here, the user can search and browse categories of nodes.
+   * @param {ConnectionPoint} from Optional. The plug a line was dragged off from. When given, only
+   * nodes that can be wired to it are offered, and the node that gets added is connected to it.
    */
-  public addNodeUI(): void {
+  public addNodeUI(from: ConnectionPoint = null): void {
+    this.from = from;
+
+    // Narrow the listings down to the nodes the dragged-off line can actually connect to
+    this.shownDb =
+      from == null
+        ? this.db
+        : this.db.filter((x) => this.findPointFor(x["instance"], from) != null);
+    this.dbByCategory = this.buildCategoryTree(this.shownDb);
+
     let element = document.createElement("div");
     element.style.left = application.getMouseX() + "px";
     element.style.top = application.getMouseY() + "px";
@@ -113,7 +159,7 @@ export class NodeDatabase {
       } else {
         // Get all of the matching nodes, and sort them
         let filteredNodes = this.sortNodeList(
-          this.db.filter((x) =>
+          this.shownDb.filter((x) =>
             x["name"].toLowerCase().includes(search.value.toLowerCase())
           )
         );
@@ -184,6 +230,7 @@ export class NodeDatabase {
    */
   public close(): void {
     document.querySelectorAll(".addNode").forEach((x) => x.remove());
+    this.from = null;
     application.updateState();
   }
 
@@ -212,9 +259,14 @@ export class NodeDatabase {
       categoryHeader.appendChild(backButton);
     }
 
-    // Add the category heading text
+    // Add the category heading text, calling out the type being connected to (if any)
     let title = document.createElement("span");
-    title.innerHTML = path.length == 0 ? "All Nodes" : path[path.length - 1];
+    title.innerHTML =
+      path.length > 0
+        ? path[path.length - 1]
+        : this.from == null
+          ? "All Nodes"
+          : `${this.from.getType().getName()} Nodes`;
     categoryHeader.appendChild(title);
 
     // Get all of the categories at the level specified by the path, as well as the special "_nodes" item
@@ -245,6 +297,10 @@ export class NodeDatabase {
         })
       );
     }
+
+    // Nothing to show, e.g. when no node can connect to the plug the line was dragged off
+    if (listings.childElementCount == 0)
+      listings.innerHTML = `<div class="noResults">No results!</div>`;
   }
 
   /**
@@ -288,6 +344,21 @@ export class NodeDatabase {
   private addNode(node: Object): void {
     // Position the node in the same place as the add node GUI
     let rect = $(".addNode").getBoundingClientRect();
-    application.addNode(node["construct"], rect.left, rect.top);
+
+    // Hold on to the plug to wire up, as adding the node closes the UI (which clears it)
+    let from = this.from;
+
+    let added = application.addNode(node["construct"], rect.left, rect.top);
+
+    if (from == null) return;
+
+    // Wire the dragged-off line into the first plug of the new node that can take it
+    let point = this.findPointFor(added, from);
+
+    if (point == null) return;
+
+    if (from.side == IOSide.Output)
+      application.connections.connect(from, point);
+    else application.connections.connect(point, from);
   }
 }

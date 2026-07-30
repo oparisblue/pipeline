@@ -1,4 +1,5 @@
 import { ConnectionManager } from "./ConnectionManager";
+import { ConnectionPoint } from "./ConnectionPoint";
 import { NodeDatabase } from "./NodeDatabase";
 import { NodeElement } from "./NodeElement";
 import { UploadManager } from "./UploadManager";
@@ -76,11 +77,14 @@ export class Pipeline {
 
       // End any currently drawn line, and bring up the add node GUI in its place
       if (this.connections.isDrawingLine()) {
+        // Remember the plug the line came from, so the added node can be wired up to it
+        let from = this.connections.getStartingPoint();
+
         // End the line
         this.connections.endLine();
 
         // Show the add node GUI
-        this.showAddNodeGUI(event);
+        this.showAddNodeGUI(event, from);
       }
     };
 
@@ -195,11 +199,14 @@ export class Pipeline {
     $("#indicator-left").style.display = leftCheck ? "block" : "none";
   }
 
-  private showAddNodeGUI(event: MouseEvent): void {
+  private showAddNodeGUI(
+    event: MouseEvent,
+    from: ConnectionPoint = null
+  ): void {
     // Ensure we only capture double-clicks on the background, not on other nodes
     if (event.srcElement == this.main) {
       //this.addNode(new this.toAdd(event.clientX, event.clientY));
-      this.nodeDatabase.addNodeUI();
+      this.nodeDatabase.addNodeUI(from);
       this.updateState();
     }
   }
