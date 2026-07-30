@@ -31,6 +31,11 @@ export class Pipeline {
   private mouseX: number;
   private mouseY: number;
 
+  // Pan accumulated from wheel gestures, waiting to be applied
+  private panX: number = 0;
+  private panY: number = 0;
+  private panFrame: number = null;
+
   private nodes: NodeElement[] = [];
 
   constructor() {
@@ -80,36 +85,25 @@ export class Pipeline {
     };
 
     // Scroll to pan
-    window.onwheel = (event: WheelEvent) => {
-      event.stopPropagation();
-      let topCheck = false;
-      let leftCheck = false;
-      let bottomCheck = false;
-      let rightCheck = false;
+    window.addEventListener(
+      "wheel",
+      (event: WheelEvent) => {
+        // Let scrollable UI (e.g. the add node list) scroll itself
+        if ((<HTMLElement>event.target).closest(".nodeListings")) return;
 
-      this.nodes.forEach((node) => {
-        const element = node.getElement();
-        const rect = element.getBoundingClientRect();
+        // Stop the browser's own gestures: rubber-banding, swipe-to-navigate, pinch zoom
+        event.preventDefault();
 
-        const top = parseInt(element.style.top) + event.deltaY;
-        const left = parseInt(element.style.left) + event.deltaX;
+        // Pinch-to-zoom arrives as ctrl + wheel; zooming isn't supported yet
+        if (event.ctrlKey) return;
 
-        if (top + rect.height < 0) topCheck = true;
-        if (left + rect.width < 0) leftCheck = true;
-        if (rect.x > window.innerWidth) rightCheck = true;
-        if (rect.y > window.innerHeight) bottomCheck = true;
+        // The add node UI is anchored to the canvas, so don't pan out from under it
+        if (this.nodeDatabase.isOpen()) return;
 
-        element.style.top = top + "px";
-        element.style.left = left + "px";
-
-        node.updatePlugPositions();
-      });
-
-      $("#indicator-top").style.display = topCheck ? "block" : "none";
-      $("#indicator-right").style.display = rightCheck ? "block" : "none";
-      $("#indicator-bottom").style.display = bottomCheck ? "block" : "none";
-      $("#indicator-left").style.display = leftCheck ? "block" : "none";
-    };
+        this.queuePan(event);
+      },
+      { passive: false }
+    );
 
     // Prevent right-click
     window.oncontextmenu = (event: MouseEvent) => {
@@ -130,6 +124,75 @@ export class Pipeline {
         false
       );
     });
+  }
+
+  /**
+   * Accumulate a wheel gesture, to be applied on the next frame.
+   * @param {WheelEvent} event The gesture to add.
+   */
+  private queuePan(event: WheelEvent): void {
+    // Trackpads report pixels, but wheels report lines or pages
+    const scale =
+      event.deltaMode == WheelEvent.DOM_DELTA_LINE
+        ? 16
+        : event.deltaMode == WheelEvent.DOM_DELTA_PAGE
+          ? window.innerHeight
+          : 1;
+
+    // The canvas follows the fingers, so it moves against the scroll direction
+    this.panX -= event.deltaX * scale;
+    this.panY -= event.deltaY * scale;
+
+    if (this.panFrame == null) {
+      this.panFrame = window.requestAnimationFrame(() => this.applyPan());
+    }
+  }
+
+  /**
+   * Move every node by the pan accumulated since the last frame.
+   */
+  private applyPan(): void {
+    this.panFrame = null;
+
+    const panX = this.panX;
+    const panY = this.panY;
+    this.panX = 0;
+    this.panY = 0;
+
+    // Read every position and size up-front, so reads and writes aren't interleaved
+    const moved = this.nodes.map((node) => {
+      const element = node.getElement();
+      return {
+        node,
+        element,
+        left: parseFloat(element.style.left) + panX,
+        top: parseFloat(element.style.top) + panY,
+        width: element.offsetWidth,
+        height: element.offsetHeight
+      };
+    });
+
+    let topCheck = false;
+    let leftCheck = false;
+    let bottomCheck = false;
+    let rightCheck = false;
+
+    for (const item of moved) {
+      if (item.top + item.height < 0) topCheck = true;
+      if (item.left + item.width < 0) leftCheck = true;
+      if (item.left > window.innerWidth) rightCheck = true;
+      if (item.top > window.innerHeight) bottomCheck = true;
+
+      item.element.style.left = item.left + "px";
+      item.element.style.top = item.top + "px";
+    }
+
+    for (const item of moved) item.node.updatePlugPositions();
+
+    $("#indicator-top").style.display = topCheck ? "block" : "none";
+    $("#indicator-right").style.display = rightCheck ? "block" : "none";
+    $("#indicator-bottom").style.display = bottomCheck ? "block" : "none";
+    $("#indicator-left").style.display = leftCheck ? "block" : "none";
   }
 
   private showAddNodeGUI(event: MouseEvent): void {

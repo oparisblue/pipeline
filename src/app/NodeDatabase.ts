@@ -173,6 +173,13 @@ export class NodeDatabase {
   }
 
   /**
+   * @return `true` if an add node GUI is currently showing.
+   */
+  public isOpen(): boolean {
+    return $(".addNode") != null;
+  }
+
+  /**
    * Close all open add node GUIs.
    */
   public close(): void {
