@@ -49,7 +49,7 @@ export class TypeImage extends DataType {
     this.control.innerHTML = this.makeImageDescription(value);
   }
 
-  private makeImageDescription(img: HTMLImageElement): string {
+  private makeImageDescription(img: HTMLImageElement | null): string {
     return `<i class="mdi mdi-file-image"></i> ${
       img == null ? "No Image" : `Image (${img.width} &times; ${img.height})`
     }`;
