@@ -1,6 +1,7 @@
 import { FileNodeElement } from "./FileNodeElement";
 import { application } from "./Pipeline";
 import { fileHandlerRegistry } from "./Registry";
+import { bytesToBase64 } from "./utils";
 
 /**
  * @classdesc Deal with uploading files and creating nodes from them.
@@ -95,10 +96,9 @@ export class UploadManager {
           let node = new (<any>clazz)();
 
           if (node instanceof FileNodeElement) {
-            // Read in the file in Base64
-            let base64 = btoa(
-              bytes.reduce((acc, val) => acc + String.fromCharCode(val), "")
-            );
+            // Read in the file in Base64. This works in chunks - appending one character
+            // per byte is far too slow for larger files, like videos
+            let base64 = bytesToBase64(bytes);
 
             // Create the node, at the position of the preview element
             let rect = this.dragPreview.getBoundingClientRect();
